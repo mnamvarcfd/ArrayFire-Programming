@@ -19,42 +19,23 @@ typedef double T;
 
 af::array myFunctionEx1(const af::array& xPos, const af::array& yPos)
 {
-	//vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv//
-	//vvvvvvv Write below the code that calculates the correct value of the function vvvvvvvv//
-
-	// It is necessary to fix the calculated and returned value of this function.
-
 	af::array fValue = xPos * xPos - yPos * yPos;
-
-	//^^^^^^^ Write above the code that calculates the correct value of the function  ^^^^^^^//
-	//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^//
 
 	return fValue;
 }
 
 af::array myFunctionEx2(const af::array& xPos, const af::array& yPos)
 {
-	//vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv//
-	//vvvvvvv Write below the code that calculates the correct value of the function vvvvvvvv//
-
 	double radius = 0.5;
 
 	af::array R = sqrt(xPos * xPos + yPos * yPos);
-	//af_print(R);
 
 	af::array indx = af::where(R <= radius);
-	//af_print(indx);
 
 	af::array fValue = af::lookup(R, indx);
-	//af_print(fValue);
 
-	fValue = 4.0 /* fValue * fValue*M_PI*/;
+	fValue = 4.0;
 	
-
-
-	//^^^^^^^ Write above the code that calculates the correct value of the function  ^^^^^^^//
-	//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^//
-
 	return fValue;
 }
 
@@ -115,67 +96,35 @@ T monteCarloIntegral2(
 
 af::array myFunctionEx3(const af::array& xPos, const af::array& yPos, const af::array& zPos)
 {
-	//vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv//
-	//vvvvvvv Write below the code that calculates the correct value of the function vvvvvvvv//
-
-	// It is necessary to fix the calculated and returned value of this function.
-
 	af::array fValue = xPos * xPos - yPos * yPos + zPos * zPos * zPos;
-
-	//^^^^^^^ Write above the code that calculates the correct value of the function  ^^^^^^^//
-	//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^//
 
 	return fValue;
 }
 
 af::array myFunctionEx4(const af::array& xPos, const af::array& yPos, const af::array& zPos)
 {
-	//vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv//
-	//vvvvvvv Write below the code that calculates the correct value of the function vvvvvvvv//
-
-	// It is necessary to fix the calculated and returned value of this function.
-
 	double radius = 0.5;
 
 	af::array R = sqrt(xPos * xPos + yPos * yPos + zPos * zPos);
-	//af_print(R);
 
 	af::array indx = af::where(R <= radius);
-	//af_print(indx);
 
 	af::array fValue = af::lookup(R, indx);
-	//af_print(fValue);
 
-	fValue = 6.0 /* fValue * fValue*M_PI*/;
-
-
-	//^^^^^^^ Write above the code that calculates the correct value of the function  ^^^^^^^//
-	//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^//
+	fValue = 6.0;
 
 	return fValue;
 }
 
 af::array myFunctionEx5(const af::array& xPos, const af::array& yPos, const af::array& zPos)
 {
-	//vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv//
-	//vvvvvvv Write below the code that calculates the correct value of the function vvvvvvvv//
-
-	// It is necessary to fix the calculated and returned value of this function.
-
 	af::array dis = 1.0 - (1.0 - sqrt(xPos * xPos + yPos * yPos) )* (1.0 - sqrt(xPos * xPos + yPos * yPos)) - zPos * zPos;
-	//af_print(R);
 
 	af::array indx = af::where(dis > 0.0);
-	//af_print(indx);
 
 	af::array fValue = af::lookup(dis, indx);
-	//af_print(fValue);
 
-	fValue = 1.0 /* fValue * fValue*M_PI*/;
-
-
-	//^^^^^^^ Write above the code that calculates the correct value of the function  ^^^^^^^//
-	//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^//
+	fValue = 1.0;
 
 	return fValue;
 }
@@ -199,19 +148,13 @@ T monteCarloIntegral3(
 	// "First" estimate of the integralApproximation
 	T integralApproximation = std::numeric_limits<T>::quiet_NaN();
 
-	//vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv//
-	//vvvvvvv Write below the code that calculates the integral approximation  vvvvvvvv//
-
 	T volume = (xMax - xMin) * (yMax - yMin) * (zMax - zMin);
-	//std::cout << "volume  " << volume << std::endl;
 	T fSum = 0;
 
 	// Iterative process to compute the integral approximation
-
 	long long int it = 1;
 	while (true)
 	{
-		//std::cout << "iteration:  " << it<< std::endl;
 		T integralApproximation_last = integralApproximation;
 
 		af::array xPos = xMin + (xMax - xMin) * af::randu(nBatch, 1, type::TYPE_AF<T>());
@@ -220,14 +163,11 @@ T monteCarloIntegral3(
 
 		af::array fValue = myFunction(xPos, yPos, zPos);
 
-		//std::cout << "====1111=====" << std::endl;
-		//af_print(fValue);
 		fSum = fSum + af::sum<T>(fValue);
 
 		long long int nTotal = nBatch * it;
 
 		T fMean = fSum / T(nTotal);
-		//std::cout << "fMean  " << fMean << std::endl;
 
 		integralApproximation = volume * fMean;
 
@@ -240,41 +180,19 @@ T monteCarloIntegral3(
 		it += 1;
 	}
 
-
-
-
-	//^^^^^^^ Write above the code that calculates the integral approximation  ^^^^^^^^//
-	//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^//
-
 	return integralApproximation;
 }
 
 af::array myFunctionEx6(const af::array& xPos, const af::array& yPos, const af::array& zPos, const af::array& tPos)
 {
-	//vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv//
-	//vvvvvvv Write below the code that calculates the correct value of the function vvvvvvvv//
-
-	// It is necessary to fix the calculated and returned value of this function.
-
 	af::array fValue = xPos * xPos - yPos * yPos + sqrt(zPos) * zPos - tPos * tPos;
-
-	//^^^^^^^ Write above the code that calculates the correct value of the function  ^^^^^^^//
-	//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^//
 
 	return fValue;
 }
 
 af::array myFunctionEx7(const af::array& xPos, const af::array& yPos, const af::array& zPos, const af::array& tPos)
 {
-	//vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv//
-	//vvvvvvv Write below the code that calculates the correct value of the function vvvvvvvv//
-
-	// It is necessary to fix the calculated and returned value of this function.
-
 	af::array fValue = xPos * xPos * yPos * yPos * zPos * zPos * (cos(tPos/3.0) + 1.0);
-
-	//^^^^^^^ Write above the code that calculates the correct value of the function  ^^^^^^^//
-	//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^//
 
 	return fValue;
 }
@@ -298,19 +216,12 @@ T monteCarloIntegral4(
 	// "First" estimate of the integralApproximation
 	T integralApproximation = std::numeric_limits<T>::quiet_NaN();
 
-	//vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv//
-	//vvvvvvv Write below the code that calculates the integral approximation  vvvvvvvv//
-
 	T volume = (xMax - xMin) * (yMax - yMin) * (zMax - zMin) * (tMax - tMin);
 	T fSum = 0;
-
-
-	// Iterative process to compute the integral approximation
 
 	long long int it = 1;
 	while (true)
 	{
-		//std::cout << "iteration:  " << it<< std::endl;
 		T integralApproximation_last = integralApproximation;
 
 		af::array xPos = xMin + (xMax - xMin) * af::randu(nBatch, 1, type::TYPE_AF<T>());
@@ -319,8 +230,6 @@ T monteCarloIntegral4(
 		af::array tPos = tMin + (tMax - tMin) * af::randu(nBatch, 1, type::TYPE_AF<T>());
 
 		af::array fValue = myFunction(xPos, yPos, zPos, tPos);
-
-		//af_print(fValue);
 
 		fSum = fSum + af::sum<T>(fValue);
 
@@ -339,57 +248,26 @@ T monteCarloIntegral4(
 		it += 1;
 	}
 
-
-
-	//^^^^^^^ Write above the code that calculates the integral approximation  ^^^^^^^^//
-	//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^//
-
 	return integralApproximation;
 }
 
 af::array myFunctionExA(const af::array& xPos)
 {
-	//vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv//
-	//vvvvvvv Write below the code that calculates the correct value of the function vvvvvvvv//
-
-	// It is necessary to fix the calculated and returned value of this function.
-	//xPos
-
-
 	af::array fValue = xPos(af::span, 0) * xPos(af::span, 0) - xPos(af::span, 1) * xPos(af::span, 1) + xPos(af::span, 2) * xPos(af::span, 2) * xPos(af::span, 2);
-	//af_print(xPos(af::span, 1));
-	//^^^^^^^ Write above the code that calculates the correct value of the function  ^^^^^^^//
-	//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^//
 
 	return fValue;
 }
 
 af::array myFunctionExB(const af::array& xPos)
 {
-	//vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv//
-	//vvvvvvv Write below the code that calculates the correct value of the function vvvvvvvv//
-
-	// It is necessary to fix the calculated and returned value of this function.
-
 	af::array fValue = xPos(af::span, 0) * xPos(af::span, 0) - xPos(af::span, 1) * xPos(af::span, 1) + sqrt(xPos(af::span, 2)) * xPos(af::span, 2) - xPos(af::span, 3) * xPos(af::span, 3);
-
-	//^^^^^^^ Write above the code that calculates the correct value of the function  ^^^^^^^//
-	//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^//
 
 	return fValue;
 }
 
 af::array myFunctionExC(const af::array& xPos)
 {
-	//vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv//
-	//vvvvvvv Write below the code that calculates the correct value of the function vvvvvvvv//
-
-	// It is necessary to fix the calculated and returned value of this function.
-
 	af::array fValue = xPos(af::span, 0) * xPos(af::span, 0) * xPos(af::span, 1) * xPos(af::span, 1) * xPos(af::span, 2) * xPos(af::span, 2) * (cos(xPos(af::span, 3) / 3.0) + 1.0);
-
-	//^^^^^^^ Write above the code that calculates the correct value of the function  ^^^^^^^//
-	//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^//
 
 	return fValue;
 }
@@ -417,28 +295,15 @@ T monteCarloIntegralN(
 	// "First" estimate of the integralApproximation
 	T integralApproximation = std::numeric_limits<T>::quiet_NaN();
 
-	////////vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv//
-	////////vvvvvvv Write below the code that calculates the integral approximation  vvvvvvvv//
-
 	T volume = af::product(xMax - xMin).scalar<T>();
-	//std::cout << "volume  " << volume << std::endl;
-
 	T fSum = 0;
-
-	//af_print(af::randu(nBatch, 3, type::TYPE_AF<T>()));
-
-	//af_print(af::tile(xMin, nBatch,1,  1, 1));
-
 
 	// Iterative process to compute the integral approximation
 	long long int it = 1;
 	long long int nDim = xMin.dims(1);
 
-	//std::cout << nDim << std::endl;
-	//std::cout << xMin.dims(0) << std::endl;
 	while (true)
 	{
-		//std::cout << "iteration:  " << it<< std::endl;
 		T integralApproximation_last = integralApproximation;
 
 		af::array xMinTil = af::tile(xMin, nBatch, 1, 1, 1);
@@ -447,23 +312,14 @@ T monteCarloIntegralN(
 
 		af::array xPos = xMinTil + (xMaxTil - xMinTil) * af::randu(nBatch, nDim, type::TYPE_AF<T>());
 
-		//af_print(xPos(af::span, 1));
-		
-
 		af::array fValue = myFunction(xPos);
 
-		//std::cout << "=======fValue=======" << std::endl;
-		//af_print(fValue);
-
 		fSum = fSum + af::sum<T>(fValue);
-
-		//af_print(fSum);
 
 		long long int nTotal = nBatch * it;
 
 		T fMean = fSum / T(nTotal);
 
-		//std::cout << "fMean  " << fMean << std::endl;
 		integralApproximation = volume * fMean;
 
 		if (std::abs((integralApproximation - integralApproximation_last)) < absTol)
@@ -474,11 +330,6 @@ T monteCarloIntegralN(
 
 		it += 1;
 	}
-
-
-
-	//^^^^^^^ Write above the code that calculates the integral approximation  ^^^^^^^^//
-	//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^//
 
 	return integralApproximation;
 }
