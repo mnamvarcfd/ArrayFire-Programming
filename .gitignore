@@ -1,32 +1,5 @@
-# Prerequisites
-*.d
+.vs
 
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
+MEC6215_DEVOIR_01_ArrayProgramming/MAIN_MONTECARLO/build_windows/*
+MEC6215_DEVOIR_01_ArrayProgramming/MAIN_MONTECARLO/VTune Profiler Results/*
+MEC6215_DEVOIR_01_ArrayProgramming/MAIN_MONTECARLO/workingDirectory/*
