@@ -3,17 +3,43 @@
 // Code written by Sébastien Leclaire(sebastien.leclaire@polymtl.ca)
 // Once completed, this code aims to provide an N-dimensional Monte Carlo integration algorithm.
 /////////////////////////////////////////////////////////////////////////////////////////////////
+#include <time.h> 
+//#include<windows.h>
+#include<stdio.h>   
+#include<tchar.h>
 
 
 #include "arrayfire.h"
 #include "IO/IO.h"
 
-#undef min
-#undef max
-
 #include <iostream>
 #include <iomanip> // std::setprecision
 # define M_PI 3.14159265358979323846  /* pi */
+
+#undef min
+#undef max
+
+//Use to convert bytes to MB
+#define DIV 1048576/*/1024*/
+#define WIDTH 7
+
+unsigned int usedMemory() {
+	MEMORYSTATUSEX statex;
+	statex.dwLength = sizeof(statex);
+	GlobalMemoryStatusEx(&statex);
+	unsigned int freeMem1 = statex.ullAvailPhys / DIV;
+	//std::cout << "free memory in Gb :" << freeMem1 << std::endl;
+	
+	return freeMem1;
+}
+
+//statex.dwLength = sizeof(statex);
+//GlobalMemoryStatusEx(&statex);
+//unsigned int freeMem2 = statex.ullAvailPhys / DIV;
+//std::cout << "free memory :" << freeMem2 << std::endl;
+//
+//double usedMemory = (double)(freeMem1 - freeMem2);
+
 
 typedef double T;
 
@@ -151,6 +177,8 @@ T monteCarloIntegral3(
 	T volume = (xMax - xMin) * (yMax - yMin) * (zMax - zMin);
 	T fSum = 0;
 
+	clock_t start = clock();
+
 	// Iterative process to compute the integral approximation
 	long long int it = 1;
 	while (true)
@@ -179,6 +207,11 @@ T monteCarloIntegral3(
 
 		it += 1;
 	}
+
+	clock_t end = clock();
+	double elapsTime = ((double)end - (double)start) / CLOCKS_PER_SEC/ it;
+	std::cout << "Elaps time of monteCarloIntegral3: " << elapsTime << std::endl;
+
 
 	return integralApproximation;
 }
@@ -219,6 +252,9 @@ T monteCarloIntegral4(
 	T volume = (xMax - xMin) * (yMax - yMin) * (zMax - zMin) * (tMax - tMin);
 	T fSum = 0;
 
+	clock_t start = clock();
+	//unsigned int freeMem1 = usedMemory();
+
 	long long int it = 1;
 	while (true)
 	{
@@ -246,7 +282,15 @@ T monteCarloIntegral4(
 			break;
 
 		it += 1;
+		//unsigned int freeMem2 = usedMemory();
+		//std::cout << "Used Memory of monteCarloIntegral4 in Gb: " << freeMem1 - freeMem2 << std::endl;
+		//int a;
+		//std::cin >> a;
 	}
+
+	clock_t end = clock();
+	double elapsTime = ((double)end - (double)start) / CLOCKS_PER_SEC / it;
+	std::cout << "Elaps time of monteCarloIntegral4: " << elapsTime << std::endl;
 
 	return integralApproximation;
 }
@@ -302,14 +346,19 @@ T monteCarloIntegralN(
 	long long int it = 1;
 	long long int nDim = xMin.dims(1);
 
+	clock_t start = clock();
+
+
+
 	while (true)
 	{
 		T integralApproximation_last = integralApproximation;
 
+	unsigned int freeMem1 = usedMemory();
+
 		af::array xMinTil = af::tile(xMin, nBatch, 1, 1, 1);
 		af::array xMaxTil = af::tile(xMax, nBatch, 1, 1, 1);
 	
-
 		af::array xPos = xMinTil + (xMaxTil - xMinTil) * af::randu(nBatch, nDim, type::TYPE_AF<T>());
 
 		af::array fValue = myFunction(xPos);
@@ -322,6 +371,10 @@ T monteCarloIntegralN(
 
 		integralApproximation = volume * fMean;
 
+		unsigned int freeMem2 = usedMemory();
+		std::cout << "Used Memory of monteCarloIntegralN in Gb: " << freeMem1 - freeMem2 << std::endl;
+		int a;
+		std::cin >> a;
 		if (std::abs((integralApproximation - integralApproximation_last)) < absTol)
 			break;
 
@@ -331,16 +384,20 @@ T monteCarloIntegralN(
 		it += 1;
 	}
 
+	clock_t end = clock();
+	double elapsTime = ((double)end - (double)start) / CLOCKS_PER_SEC / it;
+	std::cout << "Elaps time of monteCarloIntegralN: " << elapsTime << std::endl;
+
+	
 	return integralApproximation;
 }
 
 int main(int argc, char *argv[])
 {
-	af::setBackend(AF_BACKEND_CPU);
+	af::setBackend(AF_BACKEND_CPU); //AF_BACKEND_OPENCL  AF_BACKEND_CUDA    
 
 	T absTol = (T)0.1;
 	long long int nBatch = 10000;
-
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Note that the content below does not require any modification.
 	// Only the definition and content of the functions above the main program may require some modifications.
@@ -353,27 +410,33 @@ int main(int argc, char *argv[])
 	// 2. Calculation of PI with an 2D Monte Carlo algorithm (using the surface of a disk S=pi*R^2)
 	T myResultEx2 = monteCarloIntegral2(&myFunctionEx2, -0.5, 0.5, -0.5, 0.5, absTol, nBatch, std::numeric_limits<long long int>::max());
 	std::cout << "myResultEx2: " << std::setw(20) << std::setprecision(16) << myResultEx2 << " : vs : " << M_PI << std::endl;
+	
 
 	// 3. Calculation of the integral of x.^2-y.^2+z.^3 with an 3D Monte Carlo algorithm over a given bounding box
 	T myResultEx3 = monteCarloIntegral3(&myFunctionEx3, -1, 3, -4, 5, -7, 8, absTol, nBatch, std::numeric_limits<long long int>::max());
 	std::cout << "myResultEx3: " << std::setw(20) << std::setprecision(16) << myResultEx3 << " : vs : " << 12735 << std::endl;
+	
 
 	// 4. Calculation of PI with an 3D Monte Carlo algorithm (using the volume of a sphere V=4/3*pi*R^3)
 	T myResultEx4 = monteCarloIntegral3(&myFunctionEx4, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, absTol, nBatch, std::numeric_limits<long long int>::max());
 	std::cout << "myResultEx4: " << std::setw(20) << std::setprecision(16) << myResultEx4 << " : vs : " << M_PI << std::endl;
 
+
 	// 5. Calculation of the volume of a torus a^2 - (c-sqrt(x^2+y^2))^2 > z^2 with a=c=1 and an 3D Monte Carlo algorithm over a given bounding box
 	T myResultEx5 = monteCarloIntegral3(&myFunctionEx5, -3, 3, -3, 3, -1, 1, absTol, nBatch, std::numeric_limits<long long int>::max());
 	std::cout << "myResultEx5: " << std::setw(20) << std::setprecision(16) << myResultEx5 << " : vs : " << (T)2 * M_PI * M_PI * (T)1 * (T)1 * (T)1 << std::endl;
+
 
 	// 6. Calculation of the integral of x.^2-y.^2+z.^3-t^2 with an 4D Monte Carlo algorithm over a given bounding box
 	T myResultEx6 = monteCarloIntegral4(&myFunctionEx6, -1, 3, -1, 2, 1, 2, -1, 1, absTol, nBatch, std::numeric_limits<long long int>::max());
 	std::cout << "myResultEx6: " << std::setw(20) << std::setprecision(16) << myResultEx6 << " : vs : " << (T)68.70580079512686 << std::endl;
 
+
 	// 7. Calculation of the time-averaged temperature inside a torus with an 4D Monte Carlo algorithm
 	T tEnd = (T)6 * M_PI;
 	T myResultEx7 = monteCarloIntegral4(&myFunctionEx7, -3, 3, -3, 3, -1, 1, 0, tEnd, absTol, nBatch, std::numeric_limits<long long int>::max());
 	std::cout << "myResultEx7: " << std::setw(20) << std::setprecision(16) << myResultEx7 / tEnd << std::endl;
+
 
 	// A. Calculation of the integral of x.^2-y.^2+z.^3 with an ND Monte-Carlo algoritm over a given bounding box
 	af::array xMinA = af::constant(0, 1, 3, type::TYPE_AF<T>());
@@ -383,6 +446,7 @@ int main(int argc, char *argv[])
 	T myResultExA = monteCarloIntegralN(&myFunctionExA, xMinA, xMaxA, absTol, nBatch, std::numeric_limits<long long int>::max());
 	std::cout << "myResultExA: " << std::setw(20) << std::setprecision(16) << myResultExA << " : vs : " << 12735 << std::endl;
 
+
 	// B. Calculation of the integral of x.^2-y.^2+z.^3-t^2 with an ND Monte-Carlo algoritm over a given bounding box
 	af::array xMinB = af::constant(0, 1, 4, type::TYPE_AF<T>());
 	xMinB(0) = -1; xMinB(1) = -1; xMinB(2) = 1; xMinB(3) = -1;
@@ -390,6 +454,7 @@ int main(int argc, char *argv[])
 	xMaxB(0) = 3; xMaxB(1) = 2; xMaxB(2) = 2; xMaxB(3) = 1;
 	T myResultExB = monteCarloIntegralN(&myFunctionExB, xMinB, xMaxB, absTol, nBatch, std::numeric_limits<long long int>::max());
 	std::cout << "myResultExB: " << std::setw(20) << std::setprecision(16) << myResultExB << " : vs : " << (T)68.70580079512686 << std::endl;
+
 
 	// C. Calculation of the time-averaged temperature inside a torus with an ND Monte-Carlo algoritm
 	af::array xMinC = af::constant(0, 1, 4, type::TYPE_AF<T>());
@@ -401,6 +466,55 @@ int main(int argc, char *argv[])
 
 	//vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv//
 	//vvvvvvv Write below the code you want for debugging or for any other reason vvvvvvvv//
+
+
+//CPU
+//Elaps time of monteCarloIntegral3 : 0.1112
+//myResultEx3 : 12718.3660446671 : vs : 12735
+//Elaps time of monteCarloIntegralN : 0.1307
+//myResultExA : 12754.08366177275 : vs : 12735
+
+//Elaps time of monteCarloIntegral4 : 0.1415
+//myResultEx7 : 215.8840950414059
+//Elaps time of monteCarloIntegralN : 0.1755
+//myResultExC : 216.0881997952453
+
+
+
+//CUDA
+//Elaps time of monteCarloIntegral3 : 0.001176
+//myResultEx3 : 12718.36604466712 : vs : 12735
+//Elaps time of monteCarloIntegralN : 0.01515463917525773
+//myResultExA : 12754.08366177276 : vs : 12735
+
+//Elaps time of monteCarloIntegral4 : 0.005159090909090909
+//myResultEx7 : 215.8840950414057
+//Elaps time of monteCarloIntegralN : 0.01656521739130435
+//myResultExC : 216.0881997952453
+
+
+//OPENCL
+//Elaps time of monteCarloIntegral3 : 0.001832
+//myResultEx3 : 12718.36604466711 : vs : 12735
+//Elaps time of monteCarloIntegralN : 0.00145360824742268
+//myResultExA : 12754.08366177276 : vs : 12735
+
+//Elaps time of monteCarloIntegral4 : 0.004272727272727273
+//myResultEx7 : 215.8840950414058
+//Elaps time of monteCarloIntegralN : 0.002478260869565217
+//myResultExC : 216.0881997952453
+
+
+	////std::cout << "Elaps time Ex. 3: " << elapsTime3 << std::endl;
+	////std::cout << "Elaps time Ex. A: " << elapsTimeA << std::endl;
+
+	////std::cout << "Elaps time Ex. 6: " << elapsTime6 << std::endl;
+	////std::cout << "Elaps time Ex. B: " << elapsTimeB << std::endl;
+
+	////std::cout << "Elaps time Ex. 7: " << elapsTime7 << std::endl;
+	////std::cout << "Elaps time Ex. C: " << elapsTimeC << std::endl;
+
+
 	int a;
 	std::cin >> a;
 
