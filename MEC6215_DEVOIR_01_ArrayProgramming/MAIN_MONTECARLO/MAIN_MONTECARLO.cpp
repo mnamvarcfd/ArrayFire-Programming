@@ -4,10 +4,6 @@
 // Once completed, this code aims to provide an N-dimensional Monte Carlo integration algorithm.
 /////////////////////////////////////////////////////////////////////////////////////////////////
 #include <time.h> 
-//#include<windows.h>
-#include<stdio.h>   
-#include<tchar.h>
-
 
 #include "arrayfire.h"
 #include "IO/IO.h"
@@ -18,28 +14,6 @@
 
 #undef min
 #undef max
-
-//Use to convert bytes to MB
-#define DIV 1048576/*/1024*/
-#define WIDTH 7
-
-unsigned int usedMemory() {
-	MEMORYSTATUSEX statex;
-	statex.dwLength = sizeof(statex);
-	GlobalMemoryStatusEx(&statex);
-	unsigned int freeMem1 = statex.ullAvailPhys / DIV;
-	//std::cout << "free memory in Gb :" << freeMem1 << std::endl;
-	
-	return freeMem1;
-}
-
-//statex.dwLength = sizeof(statex);
-//GlobalMemoryStatusEx(&statex);
-//unsigned int freeMem2 = statex.ullAvailPhys / DIV;
-//std::cout << "free memory :" << freeMem2 << std::endl;
-//
-//double usedMemory = (double)(freeMem1 - freeMem2);
-
 
 typedef double T;
 
@@ -253,7 +227,6 @@ T monteCarloIntegral4(
 	T fSum = 0;
 
 	clock_t start = clock();
-	//unsigned int freeMem1 = usedMemory();
 
 	long long int it = 1;
 	while (true)
@@ -275,6 +248,13 @@ T monteCarloIntegral4(
 
 		integralApproximation = volume * fMean;
 
+		if (it == 1) {
+			size_t alloc_bytes, alloc_buffers;
+			size_t lock_bytes, lock_buffers;
+			af::deviceMemInfo(&alloc_bytes, &alloc_buffers, &lock_bytes, &lock_buffers);
+			std::cout << "Used Memory of monteCarloIntegral4 in Mb: " << alloc_bytes / (T)1024 / (T)1024 << std::endl;
+		}
+
 		if (std::abs((integralApproximation - integralApproximation_last)) < absTol)
 			break;
 
@@ -282,10 +262,7 @@ T monteCarloIntegral4(
 			break;
 
 		it += 1;
-		//unsigned int freeMem2 = usedMemory();
-		//std::cout << "Used Memory of monteCarloIntegral4 in Gb: " << freeMem1 - freeMem2 << std::endl;
-		//int a;
-		//std::cin >> a;
+		
 	}
 
 	clock_t end = clock();
@@ -349,12 +326,9 @@ T monteCarloIntegralN(
 	clock_t start = clock();
 
 
-
 	while (true)
 	{
 		T integralApproximation_last = integralApproximation;
-
-	unsigned int freeMem1 = usedMemory();
 
 		af::array xMinTil = af::tile(xMin, nBatch, 1, 1, 1);
 		af::array xMaxTil = af::tile(xMax, nBatch, 1, 1, 1);
@@ -371,10 +345,13 @@ T monteCarloIntegralN(
 
 		integralApproximation = volume * fMean;
 
-		unsigned int freeMem2 = usedMemory();
-		std::cout << "Used Memory of monteCarloIntegralN in Gb: " << freeMem1 - freeMem2 << std::endl;
-		int a;
-		std::cin >> a;
+		if (it == 1) {
+			size_t alloc_bytes, alloc_buffers;
+			size_t lock_bytes, lock_buffers;
+			af::deviceMemInfo(&alloc_bytes, &alloc_buffers, &lock_bytes, &lock_buffers);
+			std::cout << "Used Memory of monteCarloIntegralN in Mb: " << alloc_bytes / (T)1024 / (T)1024 << std::endl;
+		}
+
 		if (std::abs((integralApproximation - integralApproximation_last)) < absTol)
 			break;
 
@@ -397,7 +374,7 @@ int main(int argc, char *argv[])
 	af::setBackend(AF_BACKEND_CPU); //AF_BACKEND_OPENCL  AF_BACKEND_CUDA    
 
 	T absTol = (T)0.1;
-	long long int nBatch = 10000;
+	long long int nBatch = 100000;
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Note that the content below does not require any modification.
 	// Only the definition and content of the functions above the main program may require some modifications.
@@ -406,6 +383,7 @@ int main(int argc, char *argv[])
 	// 1. Calculation of the integral of x.^2-y.^2 with an 2D Monte Carlo algorithm over a given bounding box
 	T myResultEx1 = monteCarloIntegral2(&myFunctionEx1, -1, 3, -4, 5, absTol, nBatch, std::numeric_limits<long long int>::max());
 	std::cout << "myResultEx1: " << std::setw(20) << std::setprecision(16) << myResultEx1 << " : vs : " << -168 << std::endl;
+
 
 	// 2. Calculation of PI with an 2D Monte Carlo algorithm (using the surface of a disk S=pi*R^2)
 	T myResultEx2 = monteCarloIntegral2(&myFunctionEx2, -0.5, 0.5, -0.5, 0.5, absTol, nBatch, std::numeric_limits<long long int>::max());
@@ -466,57 +444,6 @@ int main(int argc, char *argv[])
 
 	//vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv//
 	//vvvvvvv Write below the code you want for debugging or for any other reason vvvvvvvv//
-
-
-//CPU
-//Elaps time of monteCarloIntegral3 : 0.1112
-//myResultEx3 : 12718.3660446671 : vs : 12735
-//Elaps time of monteCarloIntegralN : 0.1307
-//myResultExA : 12754.08366177275 : vs : 12735
-
-//Elaps time of monteCarloIntegral4 : 0.1415
-//myResultEx7 : 215.8840950414059
-//Elaps time of monteCarloIntegralN : 0.1755
-//myResultExC : 216.0881997952453
-
-
-
-//CUDA
-//Elaps time of monteCarloIntegral3 : 0.001176
-//myResultEx3 : 12718.36604466712 : vs : 12735
-//Elaps time of monteCarloIntegralN : 0.01515463917525773
-//myResultExA : 12754.08366177276 : vs : 12735
-
-//Elaps time of monteCarloIntegral4 : 0.005159090909090909
-//myResultEx7 : 215.8840950414057
-//Elaps time of monteCarloIntegralN : 0.01656521739130435
-//myResultExC : 216.0881997952453
-
-
-//OPENCL
-//Elaps time of monteCarloIntegral3 : 0.001832
-//myResultEx3 : 12718.36604466711 : vs : 12735
-//Elaps time of monteCarloIntegralN : 0.00145360824742268
-//myResultExA : 12754.08366177276 : vs : 12735
-
-//Elaps time of monteCarloIntegral4 : 0.004272727272727273
-//myResultEx7 : 215.8840950414058
-//Elaps time of monteCarloIntegralN : 0.002478260869565217
-//myResultExC : 216.0881997952453
-
-
-	////std::cout << "Elaps time Ex. 3: " << elapsTime3 << std::endl;
-	////std::cout << "Elaps time Ex. A: " << elapsTimeA << std::endl;
-
-	////std::cout << "Elaps time Ex. 6: " << elapsTime6 << std::endl;
-	////std::cout << "Elaps time Ex. B: " << elapsTimeB << std::endl;
-
-	////std::cout << "Elaps time Ex. 7: " << elapsTime7 << std::endl;
-	////std::cout << "Elaps time Ex. C: " << elapsTimeC << std::endl;
-
-
-	int a;
-	std::cin >> a;
 
 	return 0;
 }
