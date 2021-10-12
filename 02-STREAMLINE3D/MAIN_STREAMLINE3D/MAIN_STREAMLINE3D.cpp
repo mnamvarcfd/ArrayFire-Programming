@@ -9,7 +9,6 @@
 //https://en.wikipedia.org/wiki/Linear_multistep_method#Adams%E2%80%93Bashforth_methods
 
 
-
 #include "arrayfire.h"
 #include "IO/IO.h"
 
@@ -67,19 +66,6 @@ af::array pos_FourthOrderRungeKutta(const af::array& nPos, T dt, const T tPos, c
 	return nPos + k1 / 6.0 + k2 / 3.0 + k3 / 3.0 + k4 / 6.0;
 }
 
-////af::array pos_AdamsBashforth(const af::array& nPos, T dt, const T tPos, const T omega)
-////{   
-////	T delT = 0.5 * dt;
-////	af::array xPredict = pos_forwardEuler(nPos, delT, tPos, omega);
-////
-////	T t = tPos + 0.5 * dt;
-////	af::array Xnp1 = xPredict
-////					+ 1.5 * delT * (xPredict * sin(omega * t) * exp(-t))
-////					- 0.5 * delT * (nPos * sin(omega * tPos) * exp(-tPos));
-////
-////	return Xnp1;
-////}
-
 af::array pos_AdamsBashforth(const af::array& nm1Pos, const af::array& nPos, T dt, const T tPos, const T omega)
 {
 	T t = tPos - dt;
@@ -102,33 +88,6 @@ af::array init_AdamsBashforth(const af::array& nPos, T dt, const T tPos, const T
 
 	return Xnp1;
 }
-
-
-//if (iT == 0) {
-//	// Euler Forward Method
-//	xPosNew = xPosLast + dt * 0.5 * u(xPosLast, tPos, omegaX);
-//	yPosNew = yPosLast + dt * 0.5 * u(yPosLast, tPos, omegaY);
-//	zPosNew = zPosLast + dt * 0.5 * u(zPosLast, tPos, omegaZ);
-//	// First Adams-Bashforth (initial - to obtain x1):
-//	xPosNew = xPosNew + dt * 0.25 * (3 * u(xPosNew, tPos + dt * 0.5, omegaX) - u(xPosLast, tPos, omegaX));
-//	yPosNew = yPosNew + dt * 0.25 * (3 * u(yPosNew, tPos + dt * 0.5, omegaY) - u(yPosLast, tPos, omegaY));
-//	zPosNew = zPosNew + dt * 0.25 * (3 * u(zPosNew, tPos + dt * 0.5, omegaZ) - u(zPosLast, tPos, omegaZ));
-//}
-//else {
-//	// Adams-Bashforth method:
-//	xPosNew = AB2(xPosLast, xPosLastLast, &u, tPos, omegaX, dt);
-//	yPosNew = AB2(yPosLast, yPosLastLast, &u, tPos, omegaY, dt);
-//	zPosNew = AB2(zPosLast, zPosLastLast, &u, tPos, omegaZ, dt);
-//}
-//
-//if (iT > 0) {
-//	xPosLastLast = xPosLast;
-//	yPosLastLast = yPosLast;
-//	zPosLastLast = zPosLast;
-//}
-
-
-
 
 af::array pos_analytical(const af::array& posInit,  const T tPos, const T omega)
 {
@@ -239,10 +198,6 @@ int main(int argc, char *argv[])
 				// Activate stopping criterion if steady state is reached
 				if (L1sum < (T)100 * EPS) isSteadyStateReached = true;
 			}
-
-
-
-
 
 			// Eval ArrayFire JIT tree for the main variables because a recursion loop may cause OOM or performance issue.
 			xPosNew.eval();

@@ -1,9 +1,15 @@
 .vs
 
-MEC6215_DEVOIR_01_ArrayProgramming/MAIN_MONTECARLO/build_windows/*
-MEC6215_DEVOIR_01_ArrayProgramming/MAIN_MONTECARLO/VTune Profiler Results/*
-MEC6215_DEVOIR_01_ArrayProgramming/MAIN_MONTECARLO/workingDirectory/*
+01-ArrayProgramming/MAIN_MONTECARLO/build_windows/*
+01-ArrayProgramming/MAIN_MONTECARLO/VTune Profiler Results/*
+01-ArrayProgramming/MAIN_MONTECARLO/workingDirectory/*
 
-Ordinary Differential Equations/MAIN_STREAMLINE3D/workingDirectory/*
-Ordinary Differential Equations/MAIN_STREAMLINE3D/build_windows/*
-Ordinary Differential Equations/MAIN_SHOOTING_METHOD/workingDirectory/*
+02-STREAMLINE3D/MAIN_STREAMLINE3D/workingDirectory/*
+02-STREAMLINE3D/MAIN_STREAMLINE3D/build_windows/*
+02-STREAMLINE3D/MAIN_SHOOTING_METHOD/workingDirectory/*
+
+03-Heat equation/MAIN_HEAT2D/workingDirectory/*
+03-Heat equation/MAIN_HEAT2D/build_windows/*
+03-Heat equation/MAIN_HEAT2D/workingDirectory/*
+*.vtk
+*.array
