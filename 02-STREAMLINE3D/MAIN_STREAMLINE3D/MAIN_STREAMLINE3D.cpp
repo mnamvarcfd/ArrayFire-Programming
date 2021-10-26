@@ -4,11 +4,6 @@
 // This code solves the 3D advection of massless particles along 
 // the streamlines of a chosen analytical velocity field.
 //////////////////////////////////////////////////////////////
-//https://atozmath.com/example/CONM/RungeKutta.aspx?he=e&q=rk4
-//https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_methods
-//https://en.wikipedia.org/wiki/Linear_multistep_method#Adams%E2%80%93Bashforth_methods
-
-
 #include "arrayfire.h"
 #include "IO/IO.h"
 
@@ -29,17 +24,9 @@ af::array pos_forwardEuler(const af::array& nPos, T dt, const T tPos, const T om
 	return nPos + dt * nPos * sin(omega * tPos) * exp(-tPos);
 }
 
+
 af::array pos_SecondOrderRungeKutta(const af::array& nPos, T dt, const T tPos, const T omega)
 {
-	////T t = tPos;
-	////af::array k1 = dt * nPos * sin(omega * t) * exp(-t);
-
-	////t = tPos + dt * 0.5;
-	////af::array k2 = dt * (nPos + 0.5 * k1) * sin(omega * t) * exp(-t);
-
-	////return nPos + k2;
-
-
 	T t = tPos;
 	af::array k1 = nPos * sin(omega * t) * exp(-t);
 
@@ -48,6 +35,7 @@ af::array pos_SecondOrderRungeKutta(const af::array& nPos, T dt, const T tPos, c
 
 	return nPos + dt * 0.5 * (k1 + k2);
 }
+
 
 af::array pos_FourthOrderRungeKutta(const af::array& nPos, T dt, const T tPos, const T omega)
 {
@@ -66,6 +54,7 @@ af::array pos_FourthOrderRungeKutta(const af::array& nPos, T dt, const T tPos, c
 	return nPos + k1 / 6.0 + k2 / 3.0 + k3 / 3.0 + k4 / 6.0;
 }
 
+
 af::array pos_AdamsBashforth(const af::array& nm1Pos, const af::array& nPos, T dt, const T tPos, const T omega)
 {
 	T t = tPos - dt;
@@ -75,6 +64,7 @@ af::array pos_AdamsBashforth(const af::array& nm1Pos, const af::array& nPos, T d
 
 	return Xnp1;
 }
+
 
 af::array init_AdamsBashforth(const af::array& nPos, T dt, const T tPos, const T omega)
 {
@@ -89,17 +79,20 @@ af::array init_AdamsBashforth(const af::array& nPos, T dt, const T tPos, const T
 	return Xnp1;
 }
 
-af::array pos_analytical(const af::array& posInit,  const T tPos, const T omega)
+
+af::array pos_analytical(const af::array& posInit, const T tPos, const T omega)
 {
-	return posInit * std::exp(-(std::exp(-tPos) * (std::sin(omega * tPos) + omega * cos(omega * tPos))) / (omega * omega + 1))*std::exp(omega / (omega * omega + (T)1));
+	return posInit * std::exp(-(std::exp(-tPos) * (std::sin(omega * tPos) + omega * cos(omega * tPos))) / (omega * omega + 1)) * std::exp(omega / (omega * omega + (T)1));
 }
+
 
 af::array pos_analytical_steadyState(const af::array& posInit, const T omega)
 {
 	return posInit * std::exp(omega / (omega * omega + (T)1));
 }
 
-int main(int argc, char *argv[])
+
+int main(int argc, char* argv[])
 {
 	af::setBackend(AF_BACKEND_CPU);
 	af::setDevice(0);
@@ -112,7 +105,7 @@ int main(int argc, char *argv[])
 	T omegaX = (T)1 * M_PI / (T)3;
 	T omegaY = (T)2 * M_PI / (T)3;
 	T omegaZ = (T)3 * M_PI / (T)3;
-	
+
 	// Initial position of all particles
 	af::setSeed(0);
 	af::array xInit = af::randu(nParticle, 1, type::TYPE_AF<T>());
@@ -126,7 +119,7 @@ int main(int argc, char *argv[])
 	af::array zPosNm1;
 
 	// Select the constant time step.
-	T dt = 1./5;
+	T dt = 1. / 5;
 
 	for (int times = 0; times < 5; times++) {
 		dt *= 0.5;
@@ -143,45 +136,45 @@ int main(int argc, char *argv[])
 		while (isSteadyStateReached == false)
 		{
 			// Analytical solver for the position of the particles (at tPos)
-			//xPosNew = pos_analytical(xInit, tPos, omegaX);
-			//yPosNew = pos_analytical(yInit, tPos, omegaY);
-			//zPosNew = pos_analytical(zInit, tPos, omegaZ);
+			////xPosNew = pos_analytical(xInit, tPos, omegaX);
+			////yPosNew = pos_analytical(yInit, tPos, omegaY);
+			////zPosNew = pos_analytical(zInit, tPos, omegaZ);
 
 			// Forward Euler scheme
-			//////xPosNew = pos_forwardEuler(xPosLast, dt, tPos, omegaX);
-			//////yPosNew = pos_forwardEuler(yPosLast, dt, tPos, omegaY);
-			//////zPosNew = pos_forwardEuler(zPosLast, dt, tPos, omegaZ);
+			xPosNew = pos_forwardEuler(xPosLast, dt, tPos, omegaX);
+			yPosNew = pos_forwardEuler(yPosLast, dt, tPos, omegaY);
+			zPosNew = pos_forwardEuler(zPosLast, dt, tPos, omegaZ);
 
 			// Second Order Runge-Kutta scheme (RK2 aka midpoint) 
-			//////xPosNew = pos_SecondOrderRungeKutta(xPosLast, dt, tPos, omegaX);
-			//////yPosNew = pos_SecondOrderRungeKutta(yPosLast, dt, tPos, omegaY);
-			//////zPosNew = pos_SecondOrderRungeKutta(zPosLast, dt, tPos, omegaZ);
+			////xPosNew = pos_SecondOrderRungeKutta(xPosLast, dt, tPos, omegaX);
+			////yPosNew = pos_SecondOrderRungeKutta(yPosLast, dt, tPos, omegaY);
+			////zPosNew = pos_SecondOrderRungeKutta(zPosLast, dt, tPos, omegaZ);
 
 			// Fourth Order Runge-Kutta scheme (RK4)
-			//xPosNew = pos_FourthOrderRungeKutta(xPosLast, dt, tPos, omegaX);
-			//yPosNew = pos_FourthOrderRungeKutta(yPosLast, dt, tPos, omegaY);
-			//zPosNew = pos_FourthOrderRungeKutta(zPosLast, dt, tPos, omegaZ);
+			////xPosNew = pos_FourthOrderRungeKutta(xPosLast, dt, tPos, omegaX);
+			////yPosNew = pos_FourthOrderRungeKutta(yPosLast, dt, tPos, omegaY);
+			////zPosNew = pos_FourthOrderRungeKutta(zPosLast, dt, tPos, omegaZ);
 
 			//Two - step Adams - Bashforth scheme with an initial half time step and a forward Euler’s predictor.
-			if (iT == 0) {
-				xPosNew = init_AdamsBashforth(xPosLast, dt, tPos, omegaX);
-				yPosNew = init_AdamsBashforth(yPosLast, dt, tPos, omegaY);
-				zPosNew = init_AdamsBashforth(zPosLast, dt, tPos, omegaZ);
+			////if (iT == 0) {
+			////	xPosNew = init_AdamsBashforth(xPosLast, dt, tPos, omegaX);
+			////	yPosNew = init_AdamsBashforth(yPosLast, dt, tPos, omegaY);
+			////	zPosNew = init_AdamsBashforth(zPosLast, dt, tPos, omegaZ);
 
-				xPosNm1 = xPosNew;
-				yPosNm1 = yPosNew;
-				zPosNm1 = zPosNew;
-			}
-			else
-			{
-				xPosNew = pos_AdamsBashforth(xPosNm1, xPosLast, dt, tPos, omegaX);
-				yPosNew = pos_AdamsBashforth(yPosNm1, yPosLast, dt, tPos, omegaY);
-				zPosNew = pos_AdamsBashforth(zPosNm1, zPosLast, dt, tPos, omegaZ);
+			////	xPosNm1 = xPosNew;
+			////	yPosNm1 = yPosNew;
+			////	zPosNm1 = zPosNew;
+			////}
+			////else
+			////{
+			////	xPosNew = pos_AdamsBashforth(xPosNm1, xPosLast, dt, tPos, omegaX);
+			////	yPosNew = pos_AdamsBashforth(yPosNm1, yPosLast, dt, tPos, omegaY);
+			////	zPosNew = pos_AdamsBashforth(zPosNm1, zPosLast, dt, tPos, omegaZ);
 
-				xPosNm1 = xPosLast;
-				yPosNm1 = yPosLast;
-				zPosNm1 = zPosLast;
-			}
+			////	xPosNm1 = xPosLast;
+			////	yPosNm1 = yPosLast;
+			////	zPosNm1 = zPosLast;
+			////}
 
 
 			// Next time step
