@@ -17,6 +17,10 @@
     <ClCompile Include="type\type.cpp">
       <Filter>type</Filter>
     </ClCompile>
+    <ClCompile Include="Grid.cpp" />
+    <ClCompile Include="Field.cpp" />
+    <ClCompile Include="AnalyticalSolution.cpp" />
+    <ClCompile Include="LinearSys.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="IO">
@@ -48,5 +52,9 @@
     <ClInclude Include="type\type.h">
       <Filter>type</Filter>
     </ClInclude>
+    <ClInclude Include="Grid.h" />
+    <ClInclude Include="Field.h" />
+    <ClInclude Include="AnalyticalSolution.h" />
+    <ClInclude Include="LinearSys.h" />
   </ItemGroup>
 </Project>

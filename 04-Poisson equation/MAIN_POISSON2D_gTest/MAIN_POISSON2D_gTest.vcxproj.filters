@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\MAIN_POISSON2D\AnalyticalSolution.cpp">
+      <Filter>MainCode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MAIN_POISSON2D\LinearSys.cpp">
+      <Filter>MainCode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MAIN_POISSON2D\Field.cpp">
+      <Filter>MainCode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MAIN_POISSON2D\Grid.cpp">
+      <Filter>MainCode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MAIN_POISSON2D\type\type.cpp">
+      <Filter>MainCode\type</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MAIN_POISSON2D\stackoverflow\stackoverflow.cpp">
+      <Filter>MainCode\stackoverflow</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MAIN_POISSON2D\IO\console.cpp">
+      <Filter>MainCode\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MAIN_POISSON2D\IO\file.cpp">
+      <Filter>MainCode\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MAIN_POISSON2D\IO\vtk.cpp">
+      <Filter>MainCode\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="PerformanceTest.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\MAIN_POISSON2D\Grid.h">
+      <Filter>MainCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\MAIN_POISSON2D\AnalyticalSolution.h">
+      <Filter>MainCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\MAIN_POISSON2D\LinearSys.h">
+      <Filter>MainCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\MAIN_POISSON2D\Field.h">
+      <Filter>MainCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\MAIN_POISSON2D\type\type.h">
+      <Filter>MainCode\type</Filter>
+    </ClInclude>
+    <ClInclude Include="..\MAIN_POISSON2D\stackoverflow\stackoverflow.h">
+      <Filter>MainCode\stackoverflow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\MAIN_POISSON2D\IO\console.h">
+      <Filter>MainCode\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\MAIN_POISSON2D\IO\file.h">
+      <Filter>MainCode\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\MAIN_POISSON2D\IO\IO.h">
+      <Filter>MainCode\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\MAIN_POISSON2D\IO\vtk.h">
+      <Filter>MainCode\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="PerformanceTest.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="MainCode">
+      <UniqueIdentifier>{43b011f7-5b57-4bc2-b853-cd2e53aabb79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainCode\type">
+      <UniqueIdentifier>{1cc6759e-18ac-43dc-90c7-4a1f23d5d2fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainCode\stackoverflow">
+      <UniqueIdentifier>{578f0cfe-81a0-44a5-b920-b1d6b6e15587}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainCode\IO">
+      <UniqueIdentifier>{65e9443a-36f4-47c7-9a81-258a421a61b5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

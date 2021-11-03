@@ -260,16 +260,6 @@ af::array heat2D_numerical_arrayfire(int nx, int ny, int nt, T dx, T dy, T dt, T
 template <typename T>
 af::array heat2D_analytical_arrayfire(int nx, int ny, T u0, T L, T H, T time, T alpha)
 {
-	// Dummy initialization for this homework statement to compile
-	//nx = 11;
-	//ny = 11;
-
-	//af::timer timer_analytical_naive_c = af::timer::start();
-	//af::sync();
-	//printf("--------------------------------: %g\n", af::timer::stop(timer_analytical_naive_c));
-
-
-
 
 	//vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv//
 	//vvvvvvv Write below the code that calculates the correct value of the function vvvvvvvv//
@@ -331,12 +321,6 @@ af::array heat2D_analytical_arrayfire(int nx, int ny, T u0, T L, T H, T time, T 
 	}
 	//^^^^^^^ Write above the code that calculates the correct value of the function  ^^^^^^^//
 	//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^//
-	//af_print(xPart);
-	//////af_print(yPart);
-	//af_print(uAnalytical);
-	//////std::cout << mm << std::endl;
-	//int a;
-	//std::cin >> a;
 
 	// The array "uSol" return by this function should be the analytical solution at time "time".
 	// The variable "time" in this function also correspond to the same time as the 

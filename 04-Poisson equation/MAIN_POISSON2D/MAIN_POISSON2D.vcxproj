@@ -19,6 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AnalyticalSolution.cpp" />
+    <ClCompile Include="LinearSys.cpp" />
+    <ClCompile Include="Field.cpp" />
+    <ClCompile Include="Grid.cpp" />
     <ClCompile Include="MAIN_POISSON2D.cpp" />
     <ClCompile Include="IO\console.cpp" />
     <ClCompile Include="IO\file.cpp" />
@@ -27,6 +31,10 @@
     <ClCompile Include="type\type.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AnalyticalSolution.h" />
+    <ClInclude Include="LinearSys.h" />
+    <ClInclude Include="Field.h" />
+    <ClInclude Include="Grid.h" />
     <ClInclude Include="IO\console.h" />
     <ClInclude Include="IO\file.h" />
     <ClInclude Include="IO\IO.h" />
