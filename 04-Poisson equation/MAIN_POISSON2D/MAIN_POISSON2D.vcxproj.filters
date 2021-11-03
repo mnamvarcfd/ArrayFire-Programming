@@ -21,6 +21,7 @@
     <ClCompile Include="Field.cpp" />
     <ClCompile Include="AnalyticalSolution.cpp" />
     <ClCompile Include="LinearSys.cpp" />
+    <ClCompile Include="SparsLinearSys.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="IO">
@@ -56,5 +57,6 @@
     <ClInclude Include="Field.h" />
     <ClInclude Include="AnalyticalSolution.h" />
     <ClInclude Include="LinearSys.h" />
+    <ClInclude Include="SparsLinearSys.h" />
   </ItemGroup>
 </Project>

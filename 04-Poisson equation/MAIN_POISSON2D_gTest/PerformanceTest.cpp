@@ -3,6 +3,10 @@
 PerformanceTest::PerformanceTest()
 {
 	std::cout << "PerformanceTest" << std::endl;
+
+	af::setBackend(AF_BACKEND_CPU);
+	af::setDevice(0);
+	af::info(); std::cout << std::endl;
 }
 
 PerformanceTest::~PerformanceTest() 
@@ -20,32 +24,30 @@ void PerformanceTest::TearDown()
 	std::cout << "TearDown" << std::endl;
 }
 
-double function(double x, double y) 
-{
-	return -sin(x) - cos(y);
-}
-
 void mainFunc(int Nx, int Ny, double xMin, double xMax, double yMin, double yMax){
 
-	Field u = Field(Nx, Ny, xMin, xMax, yMin, yMax);
-	u.init();
-	u.setBC();
+	Field U = Field(Nx, Ny, xMin, xMax, yMin, yMax);
+	U.init();
+	U.setBC();
 
 
-	LinearSys linearSys = LinearSys(u);
+	LinearSys linearSys = LinearSys(U);
 	linearSys.creatCoeffMatrix();
-	linearSys.creatRigtHandSid(&function);
+	linearSys.creatRigtHandSid();
 	linearSys.solve();
 
 
-	AnalyticalSolution analyticalSolution = AnalyticalSolution(Nx, Ny, xMin, xMax, yMin, yMax);
+	AnalyticalSolution Ua = AnalyticalSolution(Nx, Ny, xMin, xMax, yMin, yMax);
 
 
-	double sum = 0.0;
 	for (int j = 0; j < Nx * Ny; j++) {
-		sum += (u.var[j] - analyticalSolution.var[j]) * (u.var[j] - analyticalSolution.var[j]);
+		printf("error[%d] = %.8f  Numeric:Anaytic: %.8f   %.8f \n", j, U.var[j] - Ua.var[j], U.var[j], Ua.var[j]);
 	}
-	printf("error is = %.8f  \n", sqrt(sum));
+	double error = 0.0;
+	for (int j = 0; j < Nx * Ny/*U.get_nNode()*/; j++) {
+		error += (U.var[j] - Ua.var[j]) * (U.var[j] - Ua.var[j]);
+	}
+	printf("error is = %.8f  \n", sqrt(error));
 
 }
 

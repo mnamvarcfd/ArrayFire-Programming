@@ -44,6 +44,7 @@
     <ClInclude Include="..\MAIN_POISSON2D\stackoverflow\stackoverflow.h" />
     <ClInclude Include="..\MAIN_POISSON2D\type\type.h" />
     <ClInclude Include="PerformanceTest.h" />
+    <ClInclude Include="ValidationTest.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\MAIN_POISSON2D\AnalyticalSolution.cpp" />
@@ -56,6 +57,7 @@
     <ClCompile Include="..\MAIN_POISSON2D\stackoverflow\stackoverflow.cpp" />
     <ClCompile Include="..\MAIN_POISSON2D\type\type.cpp" />
     <ClCompile Include="PerformanceTest.cpp" />
+    <ClCompile Include="ValidationTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MAIN_POISSON2D\MAIN_POISSON2D.vcxproj">

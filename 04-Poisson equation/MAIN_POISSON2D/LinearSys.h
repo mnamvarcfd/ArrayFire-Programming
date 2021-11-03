@@ -16,12 +16,14 @@ private:
 
 public:
 	int nNode;
-	double** coeff;
+	double* coeff;
 	double* RHS;
 
 
 private:
 	void initCoeffMatrix();
+	void AF2CPP(af::array A_d);
+	double function(double x, double y);
 
 
 public:
@@ -30,20 +32,8 @@ public:
 	~LinearSys();
 
 	void creatCoeffMatrix();
-	void creatRigtHandSid(double(*func)(double x, double y));
-
+	void creatRigtHandSid();
 	void solve();
-
-	void AF2CPP(af::array A_d);
-
-	void AF2CPP();
-
-	void AF2CPP(af::array A_d, double* A_h);
-
-	void AF2CPP(af::array A_d, double A_h);
-
-
-
 	void writeCoeffMatrix(std::string fileName);
 };
 

@@ -27,6 +27,7 @@
     <ClCompile Include="IO\console.cpp" />
     <ClCompile Include="IO\file.cpp" />
     <ClCompile Include="IO\vtk.cpp" />
+    <ClCompile Include="SparsLinearSys.cpp" />
     <ClCompile Include="stackoverflow\stackoverflow.cpp" />
     <ClCompile Include="type\type.cpp" />
   </ItemGroup>
@@ -39,6 +40,7 @@
     <ClInclude Include="IO\file.h" />
     <ClInclude Include="IO\IO.h" />
     <ClInclude Include="IO\vtk.h" />
+    <ClInclude Include="SparsLinearSys.h" />
     <ClInclude Include="stackoverflow\stackoverflow.h" />
     <ClInclude Include="type\type.h" />
   </ItemGroup>

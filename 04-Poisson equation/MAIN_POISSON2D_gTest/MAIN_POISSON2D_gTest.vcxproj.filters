@@ -29,6 +29,7 @@
       <Filter>MainCode\IO</Filter>
     </ClCompile>
     <ClCompile Include="PerformanceTest.cpp" />
+    <ClCompile Include="ValidationTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\MAIN_POISSON2D\Grid.h">
@@ -62,6 +63,7 @@
       <Filter>MainCode\IO</Filter>
     </ClInclude>
     <ClInclude Include="PerformanceTest.h" />
+    <ClInclude Include="ValidationTest.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="MainCode">

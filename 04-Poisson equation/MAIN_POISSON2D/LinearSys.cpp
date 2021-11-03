@@ -20,11 +20,9 @@ LinearSys::LinearSys(Field & field_)
 
 	grid = Grid(nx, ny);
 	nNode = grid.get_nNode();
+	
 
-	coeff = new double*[nNode];
-	for (int i = 0; i < nNode; i++) {
-		coeff[i] = new double[nNode];
-	}
+	coeff = new double[nNode*nNode];
 
 	initCoeffMatrix();
 
@@ -32,13 +30,19 @@ LinearSys::LinearSys(Field & field_)
 
 }
 
+double LinearSys::function(double x, double y) {
+	return -sin(x) - cos(y);
+}
+
 void LinearSys::creatCoeffMatrix()
 {
 	int iNeib[4];
+	int nodeIdx;
 
 	for (int iNode = 0; iNode < nNode; iNode++) {
 
-		coeff[iNode][iNode] = -2 * (dx * dx + dy * dy);
+		nodeIdx = field.getGlobInx(iNode, iNode);
+		coeff[nodeIdx] = -2 * (dx * dx + dy * dy);
 
 
 		grid.get_iNeib(iNode, iNeib);
@@ -49,37 +53,34 @@ void LinearSys::creatCoeffMatrix()
 
 
 		if (Tneib != -1) {
-			coeff[iNode][Tneib] = dx * dx;
+			nodeIdx = field.getGlobInx(iNode, Tneib);
+			coeff[nodeIdx] = dx * dx;
 		}
 
 		if (Rneib != -1) {
-			coeff[iNode][Rneib] = dy * dy;
+			nodeIdx = field.getGlobInx(iNode, Rneib);
+			coeff[nodeIdx] = dy * dy;
 		}
 
 		if (Bneib != -1) {
-			coeff[iNode][Bneib] = dx * dx;
+			nodeIdx = field.getGlobInx(iNode, Bneib);
+			coeff[nodeIdx] = dx * dx;
 		}
 
 		if (Lneib != -1) {
-			coeff[iNode][Lneib] = dy * dy;
+			nodeIdx = field.getGlobInx(iNode, Lneib);
+			coeff[nodeIdx] = dy * dy;
 		}
 
 	}
 
 }
 
-void LinearSys::creatRigtHandSid(double(*func)(double x, double y))
+void LinearSys::creatRigtHandSid()
 {
 	int iNeib[4];
 
-
-	//for (int iNode = 0; iNode < 16; iNode++) {
-	//	printf("---------------------- = %.4f\n", field.var[iNode]);
-	//}
-
 	for (int iNode = 0; iNode < nNode; iNode++) {
-
-		//if (iNode == 0)printf("RHS = %.4f\n", rhs);
 
 		double rhs = 0.0;
 
@@ -87,50 +88,37 @@ void LinearSys::creatRigtHandSid(double(*func)(double x, double y))
 		int j = grid.getYInx(iNode);
 
 		grid.get_iNeib(iNode, iNeib);
-
 		int Tneib = iNeib[0];
+		int Rneib = iNeib[1];
+		int Bneib = iNeib[2];
+		int Lneib = iNeib[3];
+
 		if (Tneib == -1) {
 			int nodeIdx = field.getGlobInx(i+1, field.get_ny()-1);
 			rhs += dx * dx * field.var[nodeIdx];
 		}
-		//if (iNode == 0)printf("RHS_Tneib = %.4f\n", rhs);
 
-		int Rneib = iNeib[1];
 		if (Rneib == -1) {
 			int nodeIdx = field.getGlobInx(field.get_nx()-1, j+1);
 			rhs += dy * dy * field.var[nodeIdx];
 		}
-		//if (iNode == 0)printf("RHS_Rneib = %.4f\n", rhs);
 
-		int Bneib = iNeib[2];
 		if (Bneib == -1) {
 			int nodeIdx = field.getGlobInx(i+1, 0);
 			rhs += dx * dx * field.var[nodeIdx];
-			//if (iNode == 0) {
-			//	printf("ij_Bneib = %d   %d\n", i,j);
-			//	printf("idx_Bneib = %d\n", nodeIdx);
-			//	printf("RHS_Bneib = %.4f\n", rhs);
-			//}
 		}
 
-		int Lneib = iNeib[3];
 		if (Lneib == -1) {
 			int nodeIdx = field.getGlobInx(0, j+1);
 			rhs += dy * dy * field.var[nodeIdx];
 		}
-		//if (iNode == 0)printf("RHS_Lneib = %.4f\n", rhs);
 
 
 		double x = (i + 1) * dx;
 		double y = (j + 1) * dy;
 
 
-		 RHS[iNode] = -rhs + (dx * dx * dy * dy) * func(x, y);
-		 //if (iNode == 0) {
-			// printf("x y = %.4f  %.4f \n", x, y);
-			// printf("-sin(x) - cos(y) = %.4f  %.4f\n", -sin(x) ,- cos(y));
-			// printf("rhs func = %.4f  %.4f\n", rhs, func(x, y));
-		 //}
+		 RHS[iNode] = -rhs + (dx * dx * dy * dy) * function(x, y);
 
 	}
 
@@ -138,10 +126,11 @@ void LinearSys::creatRigtHandSid(double(*func)(double x, double y))
 
 void LinearSys::initCoeffMatrix()
 {
-
+	int cnt = 0;
 	for (int i = 0; i < nNode; i++) {
 		for (int j = 0; j < nNode; j++) {
-			coeff[i][j] = 0.0;
+			coeff[cnt] = 0.0;
+			cnt++;
 		}
 	}
 
@@ -160,42 +149,23 @@ void LinearSys::writeCoeffMatrix(std::string fileName) {
 
 	for (int i = 0; i < nNode; i++) {
 		for (int j = 0; j < nNode; j++) {
-			fprintf(file, "%e  %e  %e \n ", (double)i, (double)nNode-j , coeff[i][j]);
+			int nodeIdx = field.getGlobInx(i, j);
+			fprintf(file, "%e  %e  %e \n ", (double)i, (double)nNode-j , coeff[nodeIdx]);
 		}
 	}
+
 	fclose(file);
 }
 
 
 void LinearSys::solve()
 {
-	double *A_h = new double[nNode*nNode];
 
-	int cnt = 0;
-	for (int j = 0; j < nNode; j++) {
-		for (int i = 0; i < nNode; i++) {
-			A_h[cnt] = coeff[i][j];
-			cnt++;
-		}
-	}
-	
-		
-		
-		
-
-	af::array A = af::array(nNode, nNode, A_h);
-	//af_print(A);
+	af::array A = af::array(nNode, nNode, coeff);
 
 	af::array b = af::array(nNode, RHS);
-	//af_print(b);
 
 	af::array x = af::solve(A, b);
-
-	//af_print(x);
-
-	//af::array b2 = af::matmul(A, x);
-
-	//af_print(b-b2);
 
 	AF2CPP(x);
 
@@ -224,6 +194,18 @@ void LinearSys::AF2CPP(af::array A_d)
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
 	/*double A[9];
 	A[0] = 0.1000;     A[1] = 3.1000;     A[2] = 6.1000;
 	A[3] = 1.1000;     A[4] = 4.1000;     A[5] = 7.0000;
