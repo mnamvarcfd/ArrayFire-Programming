@@ -7,14 +7,22 @@
 02-STREAMLINE3D/MAIN_STREAMLINE3D/workingDirectory/*
 02-STREAMLINE3D/MAIN_STREAMLINE3D/build_windows/*
 02-STREAMLINE3D/MAIN_SHOOTING_METHOD/workingDirectory/*
+02-STREAMLINE3D/Homework 2.zip
 
 03-Heat equation/MAIN_HEAT2D/workingDirectory/*
 03-Heat equation/MAIN_HEAT2D/build_windows/*
 03-Heat equation/MAIN_HEAT2D/workingDirectory/*
+03-Heat equation/1678926_Morteza Namvar.7z
+
+
+04-Poisson equation/MAIN_POISSON2D/workingDirectory/*
+04-Poisson equation/MAIN_POISSON2D/build_windows/*
+04-Poisson equation/MAIN_POISSON2D_gTest/x64/*
+04-Poisson equation/x64/*
+
+
 *.vtk
 *.array
-02-STREAMLINE3D/Homework 2.zip
-03-Heat equation/1678926_Morteza Namvar.7z
 *.eps
 *.png
 *.pvsm

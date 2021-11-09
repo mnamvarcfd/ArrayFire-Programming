@@ -41,10 +41,12 @@ int main(int argc, char *argv[])
 
 	//JacobiSolver solver = JacobiSolver(U);
 	DenseSolver solver = DenseSolver(U);
-	
+
+	af::timer t1 = af::timer::start();
 	solver.solve();
 	//U.write("numericalSolution");
-
+	printf(" %g \n",  af::timer::stop(t1));
+	//26.7462
 
 	//Field Ua = Field(nx, ny, xMin, xMax, yMin, yMax);
 	//Ua.init(&function);
