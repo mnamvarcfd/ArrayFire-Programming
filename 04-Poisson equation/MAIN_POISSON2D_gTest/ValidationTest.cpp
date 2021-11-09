@@ -1,12 +1,10 @@
 #include "ValidationTest.h"
+#include "../MAIN_POISSON2D/DenseSolver.h"
+#include "../MAIN_POISSON2D/JacobiSolver.h"
 
 ValidationTest::ValidationTest()
 {
 	std::cout << "ValidationTest" << std::endl;
-
-	af::setBackend(AF_BACKEND_CPU);
-	af::setDevice(0);
-	af::info(); std::cout << std::endl;
 
 }
 
@@ -23,160 +21,124 @@ void ValidationTest::SetUp()
 void ValidationTest::TearDown()
 {
 	std::cout << "TearDown" << std::endl;
+
+}
+
+double func(double x, double y) {
+	return sin(x) + cos(y);
 }
 
 
-
-INSTANTIATE_TEST_CASE_P(2DProgram, ValidationTest, ::testing::Values(0) );
-
-
-TEST_P(ValidationTest, 4by4_grid) {
+INSTANTIATE_TEST_CASE_P(Validation, ValidationTest, ::testing::Values(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14) );
 
 
-	int Nx = 4;
-	int Ny = 4;
-	double xMin = 0.0;
-	double xMax = 3.0;
-	double yMin = 0.0;
-	double yMax = 3.0;
+TEST_P(ValidationTest, DenseTest) {
 
+	double pi = 4 * atan(1.0);
 
-	Field U = Field(Nx, Ny, xMin, xMax, yMin, yMax);
-	U.init();
-	U.setBC();
-	U.write("init");
+	int nxTest[] = { 5, 10, 20, 40, 80,   6, 12, 24, 48,  96,   9, 18, 36, 72, 144 };
+
+	int nyTest[] = { 5, 10, 20, 40, 80,   6, 12, 24, 48,  96,   9, 18, 36, 72, 144 };
+
+	double xMinTest[] = { 0, 0, 0, 0, 0,  -3,-3, -3, -3, -3,   -pi, -pi, -pi,-pi,-pi };
+	double xMaxTest[] = { 1, 1, 1, 1, 1,  3 * pi, 3 * pi, 3 * pi,3 * pi,3 * pi,   2, 2, 2, 2, 2 };
+
+	double yMinTest[] = { 0, 0, 0, 0, 0,  3, 3, 3, 3, 3,   -5 * pi, -5 * pi, -5 * pi,-5 * pi,-5 * pi };
+	double yMaxTest[] = { 1, 1, 1, 1, 1,  4 * pi, 4 * pi, 4 * pi,4 * pi,4 * pi,   3 * pi, 3 * pi, 3 * pi,3 * pi,3 * pi };
 
 
 
-	LinearSys linearSys = LinearSys(U);
-	linearSys.creatCoeffMatrix();
-	linearSys.writeCoeffMatrix("Matrix");
+	int testNumber = GetParam();
 
-	linearSys.creatRigtHandSid();
-	//printf("RHS[0] = %.4f ---->  %.4f\n", linearSys.RHS[0], -U.var[1] - U.var[4] - (sin(1.0) + cos(1.0)));
-	//printf("RHS[1] = %.4f ---->  %.4f\n", linearSys.RHS[1], -U.var[7] - U.var[2] - (sin(2.0) + cos(1.0)));
-	//printf("RHS[2] = %.4f ---->  %.4f\n", linearSys.RHS[2], -U.var[8] - U.var[13]- (sin(1.0) + cos(2.0)));
-	//printf("RHS[3] = %.4f ---->  %.4f\n", linearSys.RHS[3], -U.var[11]- U.var[14]- (sin(2.0) + cos(2.0)));
+	int nx = nxTest[testNumber];
+	int ny = nyTest[testNumber];
+	double xMin = xMinTest[testNumber];
+	double xMax = xMaxTest[testNumber];
+	double yMin = yMinTest[testNumber];
+	double yMax = yMaxTest[testNumber];
 
-	linearSys.solve();
-
-
-	U.write("numericalSolution");
-
-
-
-	AnalyticalSolution analyticalSolution = AnalyticalSolution(Nx, Ny, xMin, xMax, yMin, yMax);
-	analyticalSolution.write("analyticalSolution");
-
-	for (int j = 0; j < Nx * Ny; j++) {
-		printf("error[%d] = %.8f  Numeric:Anaytic: %.8f   %.8f \n", j, U.var[j] - analyticalSolution.var[j], U.var[j], analyticalSolution.var[j]);
-	}
-	double sum = 0.0;
-	for (int j = 0; j < Nx * Ny; j++) {
-		sum += (U.var[j] - analyticalSolution.var[j]) * (U.var[j] - analyticalSolution.var[j]);
-	}
-	printf("error is = %.8f  \n", sqrt(sum));
-
-
-
-
-	double x1 = 342839 / 240000.;
-	double x2 = 179723 / 120000.0;
-	double x3 = 10867 / 24000.;
-	double x4 = 125273 / 240000.;
-
-	printf("U[0] = %.8f ---->  %.8f \n", U.var[5], x1);
-	printf("U[1] = %.8f ---->  %.8f \n", U.var[6], x2);
-	printf("U[2] = %.8f ---->  %.8f \n", U.var[9], x3);
-	printf("U[3] = %.8f ---->  %.8f \n", U.var[10], x4);
-
-	EXPECT_NEAR(U.var[5], 1.42849583, 10e-4);
-	EXPECT_NEAR(U.var[6], 1.49769167, 10e-4);
-	EXPECT_NEAR(U.var[9], 0.45279167, 10e-4);
-	EXPECT_NEAR(U.var[10], 0.52197083, 10e-4);
-
-	FAIL();
-}
-
-
-
-TEST_P(ValidationTest, 5by5_grid) {
-
-	int Nx = 5;
-	int Ny = 5;
-	double xMin = 0.0;
-	double xMax = 4.0;
-	double yMin = 0.0;
-	double yMax = 4.0;
-
-
-	Field U = Field(Nx, Ny, xMin, xMax, yMin, yMax);
-	U.init();
-	U.setBC();
-	U.write("init");
-
-
-	LinearSys linearSys = LinearSys(U);
-	linearSys.creatCoeffMatrix();
-	linearSys.writeCoeffMatrix("Matrix");
-	linearSys.creatRigtHandSid();
-	linearSys.solve();
-
-
-	U.write("numericalSolution");
-
-
-
-	AnalyticalSolution Ua = AnalyticalSolution(Nx, Ny, xMin, xMax, yMin, yMax);
-	Ua.write("analyticalSolution");
-
-	for (int j = 0; j < Nx * Ny; j++) {
-		printf("error[%d] = %.8f  Numeric:Anaytic: %.8f   %.8f \n", j, U.var[j] - Ua.var[j], U.var[j], Ua.var[j]);
-	}
-	double sum = 0.0;
-	for (int j = 0; j < Nx * Ny; j++) {
-		sum += (U.var[j] - Ua.var[j]) * (U.var[j] - Ua.var[j]);
-	}
-	printf("error is = %.8f  \n", sqrt(sum));
-
-
-	FAIL();
-}
-
-
-TEST_P(ValidationTest, sparse) {
 
 	af::setBackend(AF_BACKEND_CPU);
 	af::setDevice(0);
 	af::info(); std::cout << std::endl;
 
-	//float v[] = { 5, 8, 3, 6 };
-	//int r[] = { 0, 0, 2, 3, 4 };
-	//int c[] = { 0, 1, 2, 1 };
-	//const int M = 4, N = 4, nnz = 4;
-	//af::array vals = af::array(af::dim4(nnz), v);
-	//af::array row_ptr = af::array(af::dim4(M + 1), r);
-	//af::array col_idx = af::array(af::dim4(nnz), c);
-	//// Create sparse array (CSR) from af::arrays containing values,
-	//// row pointers, and column indices.
-	//af::array sparse = af::sparse(M, N, vals, row_ptr, col_idx, AF_STORAGE_CSR);
-	//// sparse
-	////     values:  [ 5.0, 8.0, 3.0, 6.0 ]
-	////     row_ptr: [ 0, 0, 2, 3, 4 ]
-	////     col_idx: [ 0, 1, 2, 1 ]
 
-	//af_print(sparse);
 
-	//af::array dens = af::dense(sparse);
+	Field U = Field(nx, ny, xMin, xMax, yMin, yMax);
+	U.init();
+	U.setBC();
 
-	//af_print(dens);
 
-	FAIL();
+	DenseSolver denseSolver = DenseSolver(U);
+	denseSolver.solve();
+
+
+	Field Ua = Field(nx, ny, xMin, xMax, yMin, yMax);
+	Ua.init(&func);
+
+
+	double L2error = 0.0;
+	for (int j = 0; j < U.get_nNode(); j++) {
+		L2error += (U.var[j] - Ua.var[j]) * (U.var[j] - Ua.var[j]);
+	}
+	printf("L2error is = %.8f  \n", sqrt(L2error / (nx*ny)));
+
+
+	//FAIL();
 }
 
+TEST_P(ValidationTest, JacobiTest) {
+
+	double pi = 4 * atan(1.0);
+
+	int nxTest[] = { 5, 10, 20, 40, 80,   6, 12, 24, 48,  96,   9, 18, 36, 72, 144 };
+
+	int nyTest[] = { 5, 10, 20, 40, 80,   6, 12, 24, 48,  96,   9, 18, 36, 72, 144 };
+
+	double xMinTest[] = { 0, 0, 0, 0, 0,  -3,-3, -3, -3, -3,   -pi, -pi, -pi,-pi,-pi };
+	double xMaxTest[] = { 1, 1, 1, 1, 1,  3 * pi, 3 * pi, 3 * pi,3 * pi,3 * pi,   2, 2, 2, 2, 2 };
+
+	double yMinTest[] = { 0, 0, 0, 0, 0,  3, 3, 3, 3, 3,   -5 * pi, -5 * pi, -5 * pi,-5 * pi,-5 * pi };
+	double yMaxTest[] = { 1, 1, 1, 1, 1,  4 * pi, 4 * pi, 4 * pi,4 * pi,4 * pi,   3 * pi, 3 * pi, 3 * pi,3 * pi,3 * pi };
 
 
 
+	int testNumber = GetParam();
+
+	int nx = nxTest[testNumber];
+	int ny = nyTest[testNumber];
+	double xMin = xMinTest[testNumber];
+	double xMax = xMaxTest[testNumber];
+	double yMin = yMinTest[testNumber];
+	double yMax = yMaxTest[testNumber];
+
+
+	af::setBackend(AF_BACKEND_CPU);
+	af::setDevice(0);
+	af::info(); std::cout << std::endl;
+
+
+
+	Field Ud = Field(nx, ny, xMin, xMax, yMin, yMax);
+	Ud.init();
+	Ud.setBC();
+
+
+	DenseSolver denseSolver = DenseSolver(Ud);
+	denseSolver.solve();
+
+
+	Field Uj = Field(nx, ny, xMin, xMax, yMin, yMax);
+	Uj.init();
+	Uj.setBC();
+	JacobiSolver jacobiSolver = JacobiSolver(Uj);
+	jacobiSolver.solve();
+
+	for (int j = 0; j < Ud.get_nNode(); j++) {
+		EXPECT_NEAR(Ud.var[j] , Uj.var[j], 10e-3);
+	}
+
+}
 
 
 

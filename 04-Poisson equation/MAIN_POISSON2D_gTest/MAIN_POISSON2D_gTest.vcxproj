@@ -33,31 +33,37 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
-    <ClInclude Include="..\MAIN_POISSON2D\AnalyticalSolution.h" />
+    <ClInclude Include="..\MAIN_POISSON2D\DenseSolver.h" />
     <ClInclude Include="..\MAIN_POISSON2D\Field.h" />
     <ClInclude Include="..\MAIN_POISSON2D\Grid.h" />
     <ClInclude Include="..\MAIN_POISSON2D\IO\console.h" />
     <ClInclude Include="..\MAIN_POISSON2D\IO\file.h" />
     <ClInclude Include="..\MAIN_POISSON2D\IO\IO.h" />
     <ClInclude Include="..\MAIN_POISSON2D\IO\vtk.h" />
-    <ClInclude Include="..\MAIN_POISSON2D\LinearSys.h" />
+    <ClInclude Include="..\MAIN_POISSON2D\JacobiSolver.h" />
+    <ClInclude Include="..\MAIN_POISSON2D\PoisonSolver.h" />
     <ClInclude Include="..\MAIN_POISSON2D\stackoverflow\stackoverflow.h" />
     <ClInclude Include="..\MAIN_POISSON2D\type\type.h" />
-    <ClInclude Include="PerformanceTest.h" />
+    <ClInclude Include="GridTest.h" />
+    <ClInclude Include="Performance.h" />
     <ClInclude Include="ValidationTest.h" />
+    <ClInclude Include="Examples.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\MAIN_POISSON2D\AnalyticalSolution.cpp" />
+    <ClCompile Include="..\MAIN_POISSON2D\DenseSolver.cpp" />
     <ClCompile Include="..\MAIN_POISSON2D\Field.cpp" />
     <ClCompile Include="..\MAIN_POISSON2D\Grid.cpp" />
     <ClCompile Include="..\MAIN_POISSON2D\IO\console.cpp" />
     <ClCompile Include="..\MAIN_POISSON2D\IO\file.cpp" />
     <ClCompile Include="..\MAIN_POISSON2D\IO\vtk.cpp" />
-    <ClCompile Include="..\MAIN_POISSON2D\LinearSys.cpp" />
+    <ClCompile Include="..\MAIN_POISSON2D\JacobiSolver.cpp" />
+    <ClCompile Include="..\MAIN_POISSON2D\PoisonSolver.cpp" />
     <ClCompile Include="..\MAIN_POISSON2D\stackoverflow\stackoverflow.cpp" />
     <ClCompile Include="..\MAIN_POISSON2D\type\type.cpp" />
-    <ClCompile Include="PerformanceTest.cpp" />
+    <ClCompile Include="GridTest.cpp" />
+    <ClCompile Include="Performance.cpp" />
     <ClCompile Include="ValidationTest.cpp" />
+    <ClCompile Include="Examples.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MAIN_POISSON2D\MAIN_POISSON2D.vcxproj">

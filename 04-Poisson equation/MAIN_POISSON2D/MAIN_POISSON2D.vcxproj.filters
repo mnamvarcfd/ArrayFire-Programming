@@ -19,9 +19,9 @@
     </ClCompile>
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="Field.cpp" />
-    <ClCompile Include="AnalyticalSolution.cpp" />
-    <ClCompile Include="LinearSys.cpp" />
-    <ClCompile Include="SparsLinearSys.cpp" />
+    <ClCompile Include="DenseSolver.cpp" />
+    <ClCompile Include="PoisonSolver.cpp" />
+    <ClCompile Include="JacobiSolver.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="IO">
@@ -55,8 +55,11 @@
     </ClInclude>
     <ClInclude Include="Grid.h" />
     <ClInclude Include="Field.h" />
-    <ClInclude Include="AnalyticalSolution.h" />
-    <ClInclude Include="LinearSys.h" />
-    <ClInclude Include="SparsLinearSys.h" />
+    <ClInclude Include="DenseSolver.h" />
+    <ClInclude Include="PoisonSolver.h" />
+    <ClInclude Include="JacobiSolver.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

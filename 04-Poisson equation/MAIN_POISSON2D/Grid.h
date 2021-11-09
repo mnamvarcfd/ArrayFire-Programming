@@ -17,6 +17,10 @@ protected:
 	double yMax;
 
 public:
+	bool *isBound;
+	int* nodeInx;
+
+public:
 	Grid();
 	~Grid();
 	Grid(int nx_, int ny_);
@@ -27,6 +31,14 @@ public:
 	int get_nNode();
 	double get_dx();
 	double get_dy();
+
+	double get_xVal(int iNode);
+
+	double get_yVal(int iNode);
+
+	void findBoundNodes();
+
+	void renumbering();
 
 	int getGlobInx(int i, int j);
 	int getXInx(int iNode);

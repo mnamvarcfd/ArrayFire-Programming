@@ -19,30 +19,33 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AnalyticalSolution.cpp" />
-    <ClCompile Include="LinearSys.cpp" />
+    <ClCompile Include="DenseSolver.cpp" />
+    <ClCompile Include="PoisonSolver.cpp" />
     <ClCompile Include="Field.cpp" />
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="MAIN_POISSON2D.cpp" />
     <ClCompile Include="IO\console.cpp" />
     <ClCompile Include="IO\file.cpp" />
     <ClCompile Include="IO\vtk.cpp" />
-    <ClCompile Include="SparsLinearSys.cpp" />
+    <ClCompile Include="JacobiSolver.cpp" />
     <ClCompile Include="stackoverflow\stackoverflow.cpp" />
     <ClCompile Include="type\type.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AnalyticalSolution.h" />
-    <ClInclude Include="LinearSys.h" />
+    <ClInclude Include="DenseSolver.h" />
+    <ClInclude Include="PoisonSolver.h" />
     <ClInclude Include="Field.h" />
     <ClInclude Include="Grid.h" />
     <ClInclude Include="IO\console.h" />
     <ClInclude Include="IO\file.h" />
     <ClInclude Include="IO\IO.h" />
     <ClInclude Include="IO\vtk.h" />
-    <ClInclude Include="SparsLinearSys.h" />
+    <ClInclude Include="JacobiSolver.h" />
     <ClInclude Include="stackoverflow\stackoverflow.h" />
     <ClInclude Include="type\type.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
