@@ -70,13 +70,18 @@ void JacobiSolver::solve()
 	af::array I = createDiagonalSpars(diagonalVal, nUnknown);
 	af::array LU = CoefMatrxSprs - I;
 
+	size_t alloc_bytes, alloc_buffers;
+	size_t lock_bytes, lock_buffers;
+	af::deviceMemInfo(&alloc_bytes, &alloc_buffers, &lock_bytes, &lock_buffers);
+	std::cout << "Used Memory in Mb: " << alloc_bytes / (double)1024 / (double)1024 << std::endl;
+
 
 	//solving the system of equation by using arrayfire library and jacobi method
 	af::array x;
 	int it = 0;
 	double diff = 10e6;
 	std::cout << "jacobi solver started..." << std::endl;
-	while ( it < 10e4 || diff < 10e-4) {
+	while ( it < 10e0 || diff < 10e-4) {
 
 		x = 1 / diagonalVal * (b - af::matmul(LU, x0));
 
