@@ -66,7 +66,7 @@ void JacobiSolver::solve()
 	//Set the initial value in jacobi method (However, this values could be initilize more accurate for better convergence)
 	af::array x0 = b;
 
-	//Trasfering RHS to arrayfire
+	//Creating LU part
 	af::array I = createDiagonalSpars(diagonalVal, nUnknown);
 	af::array LU = CoefMatrxSprs - I;
 
@@ -75,7 +75,8 @@ void JacobiSolver::solve()
 	af::array x;
 	int it = 0;
 	double diff = 10e6;
-	while ( it < 10e5 || diff < 10e-4) {
+	std::cout << "jacobi solver started..." << std::endl;
+	while ( it < 10e4 || diff < 10e-4) {
 
 		x = 1 / diagonalVal * (b - af::matmul(LU, x0));
 

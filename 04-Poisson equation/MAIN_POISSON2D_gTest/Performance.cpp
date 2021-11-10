@@ -30,58 +30,57 @@ void Performance::TearDown()
 
 }
 
-//AF_BACKEND_CPU=1;  AF_BACKEND_OPENCL
-int backend[] = { 1, 4 };
 
-INSTANTIATE_TEST_CASE_P(Performance, Performance, ::testing::Values(AF_BACKEND_CPU, AF_BACKEND_OPENCL) );
+INSTANTIATE_TEST_CASE_P(Performance, Performance, ::testing::Values(AF_BACKEND_CPU, AF_BACKEND_OPENCL, AF_BACKEND_CUDA) );
 
 
-TEST_P(Performance, denseSolver) {
-
-	int nx = 100;
-	int ny = 100;
-	double xMin = 0.0;
-	double xMax = 1.0;
-	double yMin = 0.0;
-	double yMax = 1.0;
-
-
-	af::Backend backend = GetParam();
-
-	af::setBackend(backend);
-	af::setDevice(0);
-	af::info(); std::cout << std::endl;
-
-	Field U = Field(nx, ny, xMin, xMax, yMin, yMax);
-	U.init();
-	U.setBC();
-
-
-	DenseSolver solver = DenseSolver(U);
-
-
-	af::timer t1 = af::timer::start();
-
-	solver.solve();
-
-	//printf("Elapse time for creating right hand side of Eq.: %g\n", af::timer::stop(t11));
-
-	std::string back;
-	if (backend == AF_BACKEND_CPU) {
-		back = "CPU_backend";
-	}
-	else if (backend == AF_BACKEND_OPENCL) {
-		back = "openCL_backend";
-	}
-
-	fprintf(file1, "%s  %s  %d   %g \n", "DenseSolver", back.c_str(), nx, af::timer::stop(t1));
-
-
-
-
-
-	FAIL();
-}
+//TEST_P(Performance, denseSolver) {
+//
+//	int nx = 150;
+//	int ny = 150;
+//	double xMin = 0.0;
+//	double xMax = 1.0;
+//	double yMin = 0.0;
+//	double yMax = 1.0;
+//
+//
+//	af::Backend backend = GetParam();
+//
+//	af::setBackend(backend);
+//	af::setDevice(0);
+//	af::info(); std::cout << std::endl;
+//
+//	Field U = Field(nx, ny, xMin, xMax, yMin, yMax);
+//	U.init();
+//	U.setBC();
+//
+//
+//	DenseSolver solver = DenseSolver(U);
+//
+//
+//	af::timer t1 = af::timer::start();
+//
+//	solver.solve();
+//
+//	std::string back;
+//	if (backend == AF_BACKEND_CPU) {
+//		back = "CPU_backend";
+//	}
+//	else if (backend == AF_BACKEND_OPENCL) {
+//		back = "openCL_backend";
+//	}
+//	else if (backend == AF_BACKEND_CUDA) {
+//		back = "CUDA_backend";
+//	}
+//
+//	fprintf(file1, "%s  %s  %d   %g \n", "DenseSolver", back.c_str(), nx, af::timer::stop(t1));
+//
+//
+//
+//
+//
+//	FAIL();
+//}
 
 
 TEST_P(Performance, jacobiSolver) {
@@ -118,6 +117,9 @@ TEST_P(Performance, jacobiSolver) {
 	}
 	else if (backend == AF_BACKEND_OPENCL) {
 		back = "openCL_backend";
+	}
+	else if (backend == AF_BACKEND_CUDA) {
+		back = "CUDA_backend";
 	}
 
 	fprintf(file1, "%s  %s  %d   %g \n", "JacobiSolver", back.c_str(), nx, af::timer::stop(t1));

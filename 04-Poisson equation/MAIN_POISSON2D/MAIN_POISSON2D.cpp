@@ -19,8 +19,8 @@ double function(double x, double y) {
 
 int main(int argc, char *argv[])
 {
-	//AF_BACKEND_CPU;  AF_BACKEND_OPENCL
-	af::setBackend(AF_BACKEND_OPENCL);
+	//AF_BACKEND_CPU;  AF_BACKEND_OPENCL;  AF_BACKEND_CUDA
+	af::setBackend(AF_BACKEND_CUDA);
 	af::setDevice(0);
 	af::info(); std::cout << std::endl;
 
@@ -48,8 +48,8 @@ int main(int argc, char *argv[])
 	
 
 	//Creating an object of a class corresponding to solving Poison's equation (Just uncomment one of the bellow)
-	//JacobiSolver solver = JacobiSolver(U);
-	DenseSolver solver = DenseSolver(U);
+	JacobiSolver solver = JacobiSolver(U);
+	//DenseSolver solver = DenseSolver(U);
 
 	//Solve the system of equation by invoking the function
 	af::timer t1 = af::timer::start();
