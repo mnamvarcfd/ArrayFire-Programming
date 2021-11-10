@@ -37,7 +37,7 @@ void GridTest::TearDown()
 
 
 
-INSTANTIATE_TEST_CASE_P(2DProgram, GridTest, ::testing::Values(0) );
+INSTANTIATE_TEST_CASE_P(2Grid, GridTest, ::testing::Values(0) );
 
 
 TEST_P(GridTest, dx) {

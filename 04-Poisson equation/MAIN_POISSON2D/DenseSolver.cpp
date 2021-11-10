@@ -22,7 +22,7 @@ void DenseSolver::solve()
 	//Creating coefficient matrix in naive C++
 	creatCoeffMatrix();
 
-	//coefficient matrix to arayfire
+	//Trasfering coefficient matrix to arayfire
 	trnsfrCoefMatrx2AF();
 
 	//Creatig a dense matrix (Note the coefficient matrix was in sparse shape)
@@ -31,10 +31,10 @@ void DenseSolver::solve()
 	//Trasfering RHS to arrayfire
 	af::array b = af::array(nUnknown, RHS);
 
-	//Free unnecessary allocate memory
+	//Free unnecessary allocated memory
 	delete[] RHS;
 
-	//solving the system of equation by using arrayfire library
+	//solving the system of equations by using arrayfire library
 	af::array x = af::solve(A, b);
 
 	//Transfering data from the matrix to the discrete domain
