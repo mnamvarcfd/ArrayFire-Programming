@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="MAIN_GODUNOV1D.cpp" />
+    <ClCompile Include="IO\file.cpp">
+      <Filter>IO</Filter>
+    </ClCompile>
+    <ClCompile Include="IO\vtk.cpp">
+      <Filter>IO</Filter>
+    </ClCompile>
+    <ClCompile Include="IO\console.cpp">
+      <Filter>IO</Filter>
+    </ClCompile>
+    <ClCompile Include="stackoverflow\stackoverflow.cpp">
+      <Filter>stackoverflow</Filter>
+    </ClCompile>
+    <ClCompile Include="type\type.cpp">
+      <Filter>type</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="IO">
+      <UniqueIdentifier>{685c14da-5988-45e7-8b93-305c0f68698d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="type">
+      <UniqueIdentifier>{6fb43382-45d0-4bab-bffd-5af6acf9f4de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="stackoverflow">
+      <UniqueIdentifier>{d90f9e84-e9c0-47c7-8990-9768f939d790}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="IO\file.h">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="IO\vtk.h">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="IO\console.h">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="IO\IO.h">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="stackoverflow\stackoverflow.h">
+      <Filter>stackoverflow</Filter>
+    </ClInclude>
+    <ClInclude Include="type\type.h">
+      <Filter>type</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
