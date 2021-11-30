@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MAIN_ADVECTION2D", "MAIN_ADVECTION2D\MAIN_ADVECTION2D.vcxproj", "{71FCD561-99F2-4B63-A4DB-DBD966120C6D}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MAIN_ADVECTION2D_gTest", "MAIN_ADVECTION2D_gTest\MAIN_ADVECTION2D_gTest.vcxproj", "{543E1A00-BB89-4293-827F-7FADAD308369}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{71FCD561-99F2-4B63-A4DB-DBD966120C6D}.Release|x64.Build.0 = Release|x64
 		{71FCD561-99F2-4B63-A4DB-DBD966120C6D}.Release|x86.ActiveCfg = Release|Win32
 		{71FCD561-99F2-4B63-A4DB-DBD966120C6D}.Release|x86.Build.0 = Release|Win32
+		{543E1A00-BB89-4293-827F-7FADAD308369}.Debug|x64.ActiveCfg = Debug|x64
+		{543E1A00-BB89-4293-827F-7FADAD308369}.Debug|x64.Build.0 = Debug|x64
+		{543E1A00-BB89-4293-827F-7FADAD308369}.Debug|x86.ActiveCfg = Debug|Win32
+		{543E1A00-BB89-4293-827F-7FADAD308369}.Debug|x86.Build.0 = Debug|Win32
+		{543E1A00-BB89-4293-827F-7FADAD308369}.Release|x64.ActiveCfg = Release|x64
+		{543E1A00-BB89-4293-827F-7FADAD308369}.Release|x64.Build.0 = Release|x64
+		{543E1A00-BB89-4293-827F-7FADAD308369}.Release|x86.ActiveCfg = Release|Win32
+		{543E1A00-BB89-4293-827F-7FADAD308369}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -19,10 +19,25 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="MAIN_ADVECTION2D.cpp" />
     <ClCompile Include="IO\console.cpp" />
     <ClCompile Include="IO\file.cpp" />
     <ClCompile Include="IO\vtk.cpp" />
+    <ClCompile Include="MAIN_ADVECTION2D.cpp" />
+    <ClCompile Include="src\D2Q2xStencil.cpp" />
+    <ClCompile Include="src\D2Q2yStencil.cpp" />
+    <ClCompile Include="src\D2Q4Stencil.cpp" />
+    <ClCompile Include="src\D2Q9Stencil.cpp" />
+    <ClCompile Include="src\CornerTransUpWind.cpp" />
+    <ClCompile Include="src\Field.cpp" />
+    <ClCompile Include="src\Laplacian.cpp" />
+    <ClCompile Include="src\Grid.cpp" />
+    <ClCompile Include="src\DonerCellUpWind.cpp" />
+    <ClCompile Include="src\LaxWendroffDimSplit.cpp" />
+    <ClCompile Include="src\LaxWendroffDimX.cpp" />
+    <ClCompile Include="src\LaxWendroffDimY.cpp" />
+    <ClCompile Include="src\Solver.cpp" />
+    <ClCompile Include="src\LaxWendroff.cpp" />
+    <ClCompile Include="src\Stencil.cpp" />
     <ClCompile Include="stackoverflow\stackoverflow.cpp" />
     <ClCompile Include="type\type.cpp" />
   </ItemGroup>
@@ -31,8 +46,26 @@
     <ClInclude Include="IO\file.h" />
     <ClInclude Include="IO\IO.h" />
     <ClInclude Include="IO\vtk.h" />
+    <ClInclude Include="src\D2Q2xStencil.h" />
+    <ClInclude Include="src\D2Q2yStencil.h" />
+    <ClInclude Include="src\D2Q4Stencil.h" />
+    <ClInclude Include="src\D2Q9Stencil.h" />
+    <ClInclude Include="src\CornerTransUpWind.h" />
+    <ClInclude Include="src\Field.h" />
+    <ClInclude Include="src\Laplacian.h" />
+    <ClInclude Include="src\Grid.h" />
+    <ClInclude Include="src\DonerCellUpWind.h" />
+    <ClInclude Include="src\LaxWendroffDimSplit.h" />
+    <ClInclude Include="src\LaxWendroffDimX.h" />
+    <ClInclude Include="src\LaxWendroffDimY.h" />
+    <ClInclude Include="src\Solver.h" />
+    <ClInclude Include="src\LaxWendroff.h" />
+    <ClInclude Include="src\Stencil.h" />
     <ClInclude Include="stackoverflow\stackoverflow.h" />
     <ClInclude Include="type\type.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

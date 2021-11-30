@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="MAIN_ADVECTION2D.cpp" />
     <ClCompile Include="IO\file.cpp">
       <Filter>IO</Filter>
     </ClCompile>
@@ -17,6 +16,52 @@
     <ClCompile Include="type\type.cpp">
       <Filter>type</Filter>
     </ClCompile>
+    <ClCompile Include="src\Field.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Grid.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="MAIN_ADVECTION2D.cpp" />
+    <ClCompile Include="src\D2Q2xStencil.cpp">
+      <Filter>src\Stencil</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D2Q2yStencil.cpp">
+      <Filter>src\Stencil</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D2Q4Stencil.cpp">
+      <Filter>src\Stencil</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D2Q9Stencil.cpp">
+      <Filter>src\Stencil</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Stencil.cpp">
+      <Filter>src\Stencil</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Solver.cpp">
+      <Filter>src\Solver</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Laplacian.cpp">
+      <Filter>src\Solver</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LaxWendroff.cpp">
+      <Filter>src\Solver</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LaxWendroffDimSplit.cpp">
+      <Filter>src\Solver</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LaxWendroffDimX.cpp">
+      <Filter>src\Solver</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LaxWendroffDimY.cpp">
+      <Filter>src\Solver</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DonerCellUpWind.cpp">
+      <Filter>src\Solver</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CornerTransUpWind.cpp">
+      <Filter>src\Solver</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="IO">
@@ -27,6 +72,15 @@
     </Filter>
     <Filter Include="stackoverflow">
       <UniqueIdentifier>{d90f9e84-e9c0-47c7-8990-9768f939d790}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{aa8fe459-e5ae-441b-9ccd-543f5207fcb3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Stencil">
+      <UniqueIdentifier>{3d3945f7-a868-4fd2-96bb-d14f827f5e4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Solver">
+      <UniqueIdentifier>{5cee9d15-951e-45cf-972b-25593ff5be81}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -48,5 +102,53 @@
     <ClInclude Include="type\type.h">
       <Filter>type</Filter>
     </ClInclude>
+    <ClInclude Include="src\Field.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Grid.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\D2Q2xStencil.h">
+      <Filter>src\Stencil</Filter>
+    </ClInclude>
+    <ClInclude Include="src\D2Q2yStencil.h">
+      <Filter>src\Stencil</Filter>
+    </ClInclude>
+    <ClInclude Include="src\D2Q4Stencil.h">
+      <Filter>src\Stencil</Filter>
+    </ClInclude>
+    <ClInclude Include="src\D2Q9Stencil.h">
+      <Filter>src\Stencil</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Stencil.h">
+      <Filter>src\Stencil</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Solver.h">
+      <Filter>src\Solver</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Laplacian.h">
+      <Filter>src\Solver</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LaxWendroff.h">
+      <Filter>src\Solver</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LaxWendroffDimSplit.h">
+      <Filter>src\Solver</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LaxWendroffDimX.h">
+      <Filter>src\Solver</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LaxWendroffDimY.h">
+      <Filter>src\Solver</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DonerCellUpWind.h">
+      <Filter>src\Solver</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CornerTransUpWind.h">
+      <Filter>src\Solver</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>
