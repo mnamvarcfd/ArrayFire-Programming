@@ -21,12 +21,8 @@
 04-Poisson equation/x64/*
 
 
-*.vtk
-*.array
-*.eps
-*.png
-*.pvsm
-*.obj
-*.xlsx
-*.tlog
-*.log
+05-Advection problem/MAIN_ADVECTION2D/workingDirectory/*
+05-Advection problem/MAIN_ADVECTION2D/build_windows/*
+05-Advection problem/MAIN_ADVECTION2D_gTest/x64/*
+05-Advection problem/x64/*
+

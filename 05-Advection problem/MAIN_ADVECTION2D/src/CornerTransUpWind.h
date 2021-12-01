@@ -15,8 +15,4 @@ public:
 	~CornerTransUpWind();
 	CornerTransUpWind(Field& field_, double a, double b);
 
-	void solve(double CFL_, int nMaxIter, double totalTime);
-
-	void solveParallel(double CFL_, double totalTime);
-
 };

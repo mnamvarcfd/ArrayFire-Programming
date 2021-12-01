@@ -1,12 +1,36 @@
 #include "Examples.h"
-#include "../MAIN_POISSON2D/JacobiSolver.h"
+
+
+double bumpExample(double x, double y) {
+
+	double val = 0.0;
+
+	if ((x * x + y * y) < 0.25) val = exp(1.0 - 0.25 / (0.25 - x * x - y * y));
+
+	return val;
+}
+
+static double SquarWaveExample(double x, double y) {
+
+	double val = 0.0;
+
+	if (abs(x) <= 0.125 && abs(y) <= 0.125) val = 1.0;
+
+	return val;
+}
 
 Examples::Examples()
 {
-	std::cout << "Examples" << std::endl;
+	std::cout << "Examples" << std::endl;	
 
-	tol = 10e-6;
-	pi = 4.0 * atan(1.0);
+	a = 1.0;
+	b = 0.0;
+
+	double n = 1.0;
+	double lambda = min(abs(1.0 / cos(atan2(b, a))), abs(1.0 / cos(atan2(b, a))));
+	tFinal = n * lambda / sqrt(a * a + b * b);
+	std::cout << "tFinal: " << tFinal << std::endl;
+
 
 }
 
@@ -18,344 +42,126 @@ Examples::~Examples()
 void Examples::SetUp()
 {
 	std::cout << "SetUp" << std::endl;
-
-	af::setBackend(AF_BACKEND_CPU);
-	af::setDevice(0);
-	af::info(); std::cout << std::endl;
-
 }
 
 void Examples::TearDown()
 {
 	std::cout << "TearDown" << std::endl;
+	FAIL();
 }
 
-
-double function(double x, double y) {
-	return sin(x) + cos(y);
-}
 
 INSTANTIATE_TEST_CASE_P(Example, Examples, ::testing::Values(0) );
 
 
-TEST_P(Examples, grid4by4) {
+TEST_P(Examples, forReport) {
 
-	int nx = 4;
-	int ny = 4;
-	double xMin = 0.0;
-	double xMax = 3.0;
-	double yMin = 0.0;
-	double yMax = 3.0;
-
-
-	Field U = Field(nx, ny, xMin, xMax, yMin, yMax);
-	U.init();
-	U.setBC();
-
-
-	DenseSolver denseSolver = DenseSolver(U);
-	denseSolver.solve();
-
-
-	EXPECT_NEAR(U.var[5], 1.42850855, tol);
-	EXPECT_NEAR(U.var[6], 1.49770178, tol);
-	EXPECT_NEAR(U.var[9], 0.45278586, tol);
-	EXPECT_NEAR(U.var[10], 0.52197908, tol);
-
-}
-
-
-TEST_P(Examples, grid5by5) {
-
-	int nx = 5;
-	int ny = 5;
-	double xMin = 0.0;
-	double xMax = 4.0;
-	double yMin = 0.0;
-	double yMax = 4.0;
+	int nx = 82;
+	int ny = nx;
+	double dx = 0.5 * (1.0 / (nx));
+	double xMin = -0.5 + dx;
+	double xMax = 0.5 - dx;
+	double yMin = -0.5 + dx;
+	double yMax = 0.5 - dx;
 
 
 	Field U = Field(nx, ny, xMin, xMax, yMin, yMax);
-	U.init();
-	U.setBC();
-
-
-	DenseSolver denseSolver = DenseSolver(U);
-	denseSolver.solve();
-
-	EXPECT_NEAR(U.var[6], 1.432072, tol);
-	EXPECT_NEAR(U.var[7], 1.507816, tol);
-	EXPECT_NEAR(U.var[8], 0.711560, tol);
-
-	EXPECT_NEAR(U.var[11], 0.456927, tol);
-	EXPECT_NEAR(U.var[12], 0.528733, tol);
-	EXPECT_NEAR(U.var[13],-0.267618, tol);
-
-	EXPECT_NEAR(U.var[16], -0.142276, tol);
-	EXPECT_NEAR(U.var[17], -0.075343, tol);
-	EXPECT_NEAR(U.var[18], -0.862788, tol);
-}
-
-
-TEST_P(Examples, testCase6) {
-
-	int nx = 7;
-	int ny = 6;
-	double xMin = -3.0;
-	double xMax = 3.0 * pi;
-	double yMin = 3.0;
-	double yMax = 4.0 * pi;
-
-
-	Field U = Field(nx, ny, xMin, xMax, yMin, yMax);
-	U.init();
-	U.setBC();
-
-
-	DenseSolver denseSolver = DenseSolver(U);
-	denseSolver.solve();
-
-
-	EXPECT_NEAR(U.var[5], 1.42850855, tol);
-	EXPECT_NEAR(U.var[6], 1.49770178, tol);
-	EXPECT_NEAR(U.var[9], 0.45278586, tol);
-	EXPECT_NEAR(U.var[10], 0.52197908, tol);
-
-}
-
-
-
-TEST_P(Examples, forPresentation) {
-
-	int nx = 50;
-	int ny = 50;
-	double xMin = 0.0;
-	double xMax = 1.0;
-	double yMin = 0.0;
-	double yMax = 1.0;
-
-
-	Field U = Field(nx, ny, xMin, xMax, yMin, yMax);
-	U.init();
-	U.setBC();
+	U.init(&bumpExample);
 	U.write("init");
 
 
-	DenseSolver denseSolver = DenseSolver(U);
-	denseSolver.solve();
+	//LaxWendroff solver = LaxWendroff(U, a, b);
+	DonerCellUpWind solver = DonerCellUpWind(U, a, b);
+	//CornerTransUpWind solver = CornerTransUpWind(U, a, b);
+	//LaxWendroffDimSplit solver = LaxWendroffDimSplit(U, a, b);
+
+	solver.solve(0.9, 10e6, tFinal);
+	//solver.solveParallel(0.9, tFinal);
 	U.write("numericalSolution");
 
 
 	Field Ua = Field(nx, ny, xMin, xMax, yMin, yMax);
-	Ua.init(&function);
+	Ua.init(&bumpExample, a, b, tFinal);
 	Ua.write("analyticalSolution");
 
-
+	//Calculating the L1 error
 	double error = 0.0;
 	for (int j = 0; j < U.get_nNode(); j++) {
-	error += (U.var[j] - Ua.var[j])* (U.var[j] - Ua.var[j]);
+		error += abs(U.var[j] - Ua.var[j]);
 	}
-	printf("error is = %.8f  \n", sqrt(error));
+	error = error / U.get_nNode();
 
+	printf("L1 error: %.8f  \n", error);
 }
 
 
+TEST_P(Examples, Parallel) {
 
-
-TEST_P(Examples, grid5by5jacobi) {
-
-	int nx = 5;
-	int ny = 5;
-	double xMin = 0.0;
-	double xMax = 4.0;
-	double yMin = 0.0;
-	double yMax = 4.0;
-
-
-	Field U = Field(nx, ny, xMin, xMax, yMin, yMax);
-	U.init();
-	U.setBC();
-
-
-	JacobiSolver jacobiSolver = JacobiSolver(U);
-	jacobiSolver.solve();
-
-	EXPECT_NEAR(U.var[6], 1.432072, tol);
-	EXPECT_NEAR(U.var[7], 1.507816, tol);
-	EXPECT_NEAR(U.var[8], 0.711560, tol);
-
-	EXPECT_NEAR(U.var[11], 0.456927, tol);
-	EXPECT_NEAR(U.var[12], 0.528733, tol);
-	EXPECT_NEAR(U.var[13], -0.267618, tol);
-
-	EXPECT_NEAR(U.var[16], -0.142276, tol);
-	EXPECT_NEAR(U.var[17], -0.075343, tol);
-	EXPECT_NEAR(U.var[18], -0.862788, tol);
-}
-
-
-TEST_P(Examples, testCase1Jacobi) {
-
-	int nx = 5;
-	int ny = 5;
-	double xMin = 0.0;
-	double xMax = 1.0;
-	double yMin = 0.0;
-	double yMax = 1.0;
-
-
-	af::setBackend(AF_BACKEND_CPU);
+	af::setBackend(AF_BACKEND_OPENCL);  //   AF_BACKEND_CPU
 	af::setDevice(0);
-	af::info(); std::cout << std::endl;
+	af::info();
+
+	int GSize[] = { 10e4, 10e5, 10e6, 10e7 };
+
+	for (int i = 0; i < 4; i++) {
+
+		int nx = sqrt((double)GSize[i]);
+		int ny = nx;
+		double dx = 0.5 * (1.0 / (nx));
+		double xMin = -0.5 + dx;
+		double xMax = 0.5 - dx;
+		double yMin = -0.5 + dx;
+		double yMax = 0.5 - dx;
 
 
-
-	Field Ud = Field(nx, ny, xMin, xMax, yMin, yMax);
-	Ud.init();
-	Ud.setBC();
-	DenseSolver denseSolver = DenseSolver(Ud);
-	denseSolver.solve();
+		Field U = Field(nx, ny, xMin, xMax, yMin, yMax);
+		U.init(&bumpExample);
 
 
-	Field Uj = Field(nx, ny, xMin, xMax, yMin, yMax);
-	Uj.init();
-	Uj.setBC();
-	JacobiSolver jacobiSolver = JacobiSolver(Uj);
-	jacobiSolver.solve();
+		DonerCellUpWind solver = DonerCellUpWind(U, a, b);
 
 
-	for (int j = 0; j < 25; j++) {
-		EXPECT_NEAR(Ud.var[j], Uj.var[j], 10e-6);
+		af::timer t1 = af::timer::start();
+		solver.solveParallel(0.9, 2.0);
+		printf("Overal time parallel: %g \n", af::timer::stop(t1));
+
+
 	}
 
 }
 
 
-TEST_P(Examples, testCase2Jacobi) {
-
-	int nx = 10;
-	int ny = 10;
-	double xMin = 0.0;
-	double xMax = 1.0;
-	double yMin = 0.0;
-	double yMax = 1.0;
+TEST_P(Examples, NaivCpp) {
 
 
-	af::setBackend(AF_BACKEND_CPU);
-	af::setDevice(0);
-	af::info(); std::cout << std::endl;
+	int GSize[] = { 10e4, 10e5, 10e6, 10e7, 10e8 };
+
+	for (int i = 0; i < 5; i++) {
+
+		int nx = sqrt( (double)GSize[i]) ;
+		int ny = nx;
+		double dx = 0.5 * (1.0 / (nx));
+		double xMin = -0.5 + dx;
+		double xMax = 0.5 - dx;
+		double yMin = -0.5 + dx;
+		double yMax = 0.5 - dx;
 
 
-
-	Field Ud = Field(nx, ny, xMin, xMax, yMin, yMax);
-	Ud.init();
-	Ud.setBC();
-	DenseSolver denseSolver = DenseSolver(Ud);
-	denseSolver.solve();
+		Field U = Field(nx, ny, xMin, xMax, yMin, yMax);
+		U.init(&bumpExample);
 
 
-	Field Uj = Field(nx, ny, xMin, xMax, yMin, yMax);
-	Uj.init();
-	Uj.setBC();
-	JacobiSolver jacobiSolver = JacobiSolver(Uj);
-	jacobiSolver.solve();
+		DonerCellUpWind solver = DonerCellUpWind(U, a, b);
 
 
-	for (int j = 0; j < 100; j++) {
-		EXPECT_NEAR(Ud.var[j], Uj.var[j], 10e-6);
+		af::timer t1 = af::timer::start();
+		solver.solve(0.9, 100, 2.0);
+		printf("Overal time Serial: %g \n", af::timer::stop(t1));
+
+
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-//TEST_P(Examples, CSRformat) {
-
-//
-//	int nx = 5;
-//	int ny = 5;
-//	double xMin = 0.0;
-//	double xMax = 4.0;
-//	double yMin = 0.0;
-//	double yMax = 4.0;
-//
-//
-//	Field U = Field(nx, ny, xMin, xMax, yMin, yMax);
-//	U.init();
-//	U.setBC();
-//	//U.write("init");
-//
-//
-//	DenseSolver denseSolver = DenseSolver(U);
-//	denseSolver.solve();
-//
-//
-//	Field Ua = Field(nx, ny, xMin, xMax, yMin, yMax);
-//	Ua.init(&function);
-//
-//	for (int j = 0; j < nx * ny; j++) {
-//		printf("error[%d] = %.8f  Numeric:Anaytic: %.8f   %.8f \n", j, U.var[j] - Ua.var[j], U.var[j], Ua.var[j]);
-//	}
-//	double sum = 0.0;
-//	for (int j = 0; j < nx * ny; j++) {
-//		sum += (U.var[j] - Ua.var[j]) * (U.var[j] - Ua.var[j]);
-//	}
-//	printf("error is = %.8f  \n", sqrt(sum));
-//
-//	FAIL();
-//}
-//
-//
-//
-//
-//TEST_P(Examples, sparse) {
-//
-//	af::setBackend(AF_BACKEND_CPU);
-//	af::setDevice(0);
-//	af::info(); std::cout << std::endl;
-//
-//	float v[] = { 8, 5, 3, 6 };
-//	int r[] = { 0, 0, 2, 3, 4 };
-//	int c[] = { 1, 0, 2, 1 };
-//	const int M = 4, N = 4, nnz = 4;
-//	af::array vals = af::array(af::dim4(nnz), v);
-//	af::array row_ptr = af::array(af::dim4(M + 1), r);
-//	af::array col_idx = af::array(af::dim4(nnz), c);
-//	// Create sparse array (CSR) from af::arrays containing values,
-//	// row pointers, and column indices.
-//	af::array sparse = af::sparse(M, N, vals, row_ptr, col_idx, AF_STORAGE_CSR);
-//	// sparse
-//	//     values:  [ 5.0, 8.0, 3.0, 6.0 ]
-//	//     row_ptr: [ 0, 0, 2, 3, 4 ]
-//	//     col_idx: [ 0, 1, 2, 1 ]
-//
-//	af_print(sparse);
-//
-//	af::array dens = af::dense(sparse);
-//
-//	af_print(dens);
-
-	//FAIL();
-//}
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

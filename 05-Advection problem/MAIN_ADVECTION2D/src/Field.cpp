@@ -39,57 +39,6 @@ void Field::init(double Func(double x, double y))
 
 }
 
-//initializing the main variable based on a given function
-void Field::init(double Func(double x, double y, double t), double t, bool periodic)
-{
-	double val = 0.0;
-
-	double *varTmp = new double[nNode];
-
-	for (int i = 0; i < nNode; i++) {
-		double x = get_xVal(i);
-		double y = get_yVal(i);
-
-		if ((x * x + y * y) < 0.25) {
-			val = exp(1.0 - 0.25 / (0.25 - x * x - y * y));
-		}
-
-		varTmp[i] = val;
-	}
-
-
-	int shiftX = ceil(0.5 * t / get_dx());
-	int shiftY = ceil(-0.3 * t / get_dy());
-	//std::cout << shiftX<<  "  shiftX=====shiftY  " << shiftY << std::endl;
-
-
-	for (int i = 0; i < nNode; i++) {
-
-		double iIndex = getXInx(i) + shiftX;
-		double jIndex = getYInx(i) + shiftY;
-
-
-		if (iIndex >(nx-1)) {
-			iIndex -= nx;
-		}
-		else if (iIndex < 0) {
-			iIndex += nx;
-		}
-
-		if (jIndex > (ny - 1)) {
-			jIndex -= ny;
-		}
-		else if (jIndex < 0) {
-			jIndex += ny;
-		}
-
-
-		int iNode = getGlobInx(iIndex, jIndex);
-		var[iNode] = varTmp[i];
-	}
-
-}
-
 
 //initializing the main variable based on a given function
 void Field::init(double Func(double x, double y), double a, double b, double t)
@@ -104,13 +53,8 @@ void Field::init(double Func(double x, double y), double a, double b, double t)
 	}
 
 
-	int shiftX = /*ceil*/(a * t / get_dx());
-	int shiftY = /*ceil*/(b * t / get_dy());
-
-	//std::cout << a * t << "  ===== " << get_dx() << std::endl;
-
-
-	//std::cout<< shiftX << "  shiftX=====shiftY "<< shiftY << std::endl;
+	int shiftX = (a * t / get_dx());
+	int shiftY = (b * t / get_dy());
 
 
 	for (int i = 0; i < nNode; i++) {

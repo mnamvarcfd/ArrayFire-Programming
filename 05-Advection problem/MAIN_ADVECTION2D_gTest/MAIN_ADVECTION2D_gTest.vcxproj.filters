@@ -7,40 +7,80 @@
     <Filter Include="MainCode">
       <UniqueIdentifier>{a798efd4-2880-40a6-925a-f6684449619a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MainCode\type">
-      <UniqueIdentifier>{454a25e1-03f4-418d-9d01-f8ce1d29ef8e}</UniqueIdentifier>
+    <Filter Include="Verification">
+      <UniqueIdentifier>{a752d1ee-f2eb-48a8-af47-3e140f78e639}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MainCode\stackoverflow">
-      <UniqueIdentifier>{a8a94997-369e-4607-890a-7b636be3e807}</UniqueIdentifier>
+    <Filter Include="Descrete test">
+      <UniqueIdentifier>{c4a6babb-6beb-49b2-8835-75c9b67a1846}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MainCode\src">
-      <UniqueIdentifier>{e3812887-5758-4121-915f-2529325fc62d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MainCode\IO">
-      <UniqueIdentifier>{73438076-640b-479b-b799-620b7f05e028}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Solver">
+    <Filter Include="Solver test">
       <UniqueIdentifier>{98822c4d-eb71-433f-ba58-f67087740b35}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Stencil">
+    <Filter Include="Stencil test">
       <UniqueIdentifier>{7404d4d7-1672-45d2-874a-bcba86ee4722}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ParallelValidation">
+      <UniqueIdentifier>{2c08e970-27d2-4673-8552-ba881d725a92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainCode\IO">
+      <UniqueIdentifier>{fd9bebc9-dedd-43f1-a0f1-f42cf29cd2cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainCode\src">
+      <UniqueIdentifier>{b0553a9c-4e04-4c70-962f-67f602c97cf6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainCode\src\Stencil">
+      <UniqueIdentifier>{0632c898-a19b-4727-b843-49c762bcbcfd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainCode\src\Solver">
+      <UniqueIdentifier>{16d10354-f1bf-42b0-9eca-dd0de7fef8cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainCode\src\Descrete">
+      <UniqueIdentifier>{a16f8cb8-6768-4d6e-9931-718d39ad9d33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainCode\stackoverflow">
+      <UniqueIdentifier>{4105db05-9e95-4bbc-9d76-8f67dd85f5b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainCode\type">
+      <UniqueIdentifier>{28cc47fd-f0db-4fd4-b1e6-6ae8428de4c8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\MAIN_ADVECTION2D\type\type.cpp">
-      <Filter>MainCode\type</Filter>
+    <ClCompile Include="src\D2Q2xStencilTest.cpp">
+      <Filter>Stencil test</Filter>
     </ClCompile>
-    <ClCompile Include="..\MAIN_ADVECTION2D\stackoverflow\stackoverflow.cpp">
-      <Filter>MainCode\stackoverflow</Filter>
+    <ClCompile Include="src\D2Q2yStencilTest.cpp">
+      <Filter>Stencil test</Filter>
     </ClCompile>
-    <ClCompile Include="..\MAIN_ADVECTION2D\src\Field.cpp">
-      <Filter>MainCode\src</Filter>
+    <ClCompile Include="src\D2Q4StencilTest.cpp">
+      <Filter>Stencil test</Filter>
     </ClCompile>
-    <ClCompile Include="..\MAIN_ADVECTION2D\src\Grid.cpp">
-      <Filter>MainCode\src</Filter>
+    <ClCompile Include="src\D2Q9StencilTest.cpp">
+      <Filter>Stencil test</Filter>
     </ClCompile>
-    <ClCompile Include="..\MAIN_ADVECTION2D\src\Stencil.cpp">
-      <Filter>MainCode\src</Filter>
+    <ClCompile Include="src\LaxWendroffTest.cpp">
+      <Filter>Solver test</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DonerCellUpWindTest.cpp">
+      <Filter>Solver test</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CornerTransUpWindTest.cpp">
+      <Filter>Solver test</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LaxWendroffDimSplitTest.cpp">
+      <Filter>Solver test</Filter>
+    </ClCompile>
+    <ClCompile Include="MAIN_ADVECTION2D_gTest.cpp" />
+    <ClCompile Include="src\BumpValidation.cpp">
+      <Filter>Verification</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SquarWaveValidation.cpp">
+      <Filter>Verification</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GridTest.cpp">
+      <Filter>Descrete test</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ParallelValidation.cpp">
+      <Filter>ParallelValidation</Filter>
     </ClCompile>
     <ClCompile Include="..\MAIN_ADVECTION2D\IO\console.cpp">
       <Filter>MainCode\IO</Filter>
@@ -51,88 +91,92 @@
     <ClCompile Include="..\MAIN_ADVECTION2D\IO\vtk.cpp">
       <Filter>MainCode\IO</Filter>
     </ClCompile>
-    <ClCompile Include="src\GridTest.cpp" />
-    <ClCompile Include="..\MAIN_ADVECTION2D\src\D2Q4Stencil.cpp">
-      <Filter>MainCode\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\MAIN_ADVECTION2D\src\Laplacian.cpp">
-      <Filter>MainCode\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\MAIN_ADVECTION2D\src\Solver.cpp">
-      <Filter>MainCode\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\MAIN_ADVECTION2D\src\D2Q9Stencil.cpp">
-      <Filter>MainCode\src</Filter>
-    </ClCompile>
     <ClCompile Include="..\MAIN_ADVECTION2D\src\D2Q2xStencil.cpp">
-      <Filter>MainCode\src</Filter>
+      <Filter>MainCode\src\Stencil</Filter>
     </ClCompile>
     <ClCompile Include="..\MAIN_ADVECTION2D\src\D2Q2yStencil.cpp">
-      <Filter>MainCode\src</Filter>
+      <Filter>MainCode\src\Stencil</Filter>
     </ClCompile>
-    <ClCompile Include="src\D2Q2xStencilTest.cpp">
-      <Filter>Stencil</Filter>
+    <ClCompile Include="..\MAIN_ADVECTION2D\src\D2Q4Stencil.cpp">
+      <Filter>MainCode\src\Stencil</Filter>
     </ClCompile>
-    <ClCompile Include="src\D2Q2yStencilTest.cpp">
-      <Filter>Stencil</Filter>
+    <ClCompile Include="..\MAIN_ADVECTION2D\src\D2Q9Stencil.cpp">
+      <Filter>MainCode\src\Stencil</Filter>
     </ClCompile>
-    <ClCompile Include="src\D2Q4StencilTest.cpp">
-      <Filter>Stencil</Filter>
-    </ClCompile>
-    <ClCompile Include="src\D2Q9StencilTest.cpp">
-      <Filter>Stencil</Filter>
-    </ClCompile>
-    <ClCompile Include="src\LaxWendroffTest.cpp">
-      <Filter>Solver</Filter>
-    </ClCompile>
-    <ClCompile Include="..\MAIN_ADVECTION2D\src\LaxWendroff.cpp">
-      <Filter>MainCode\src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\BumpValidation.cpp" />
-    <ClCompile Include="src\DonerCellUpWindTest.cpp">
-      <Filter>Solver</Filter>
-    </ClCompile>
-    <ClCompile Include="..\MAIN_ADVECTION2D\src\DonerCellUpWind.cpp">
-      <Filter>MainCode\src</Filter>
+    <ClCompile Include="..\MAIN_ADVECTION2D\src\Stencil.cpp">
+      <Filter>MainCode\src\Stencil</Filter>
     </ClCompile>
     <ClCompile Include="..\MAIN_ADVECTION2D\src\CornerTransUpWind.cpp">
-      <Filter>MainCode\src</Filter>
+      <Filter>MainCode\src\Solver</Filter>
     </ClCompile>
-    <ClCompile Include="src\CornerTransUpWindTest.cpp">
-      <Filter>Solver</Filter>
-    </ClCompile>
-    <ClCompile Include="src\LaxWendroffDimSplitTest.cpp">
-      <Filter>Solver</Filter>
-    </ClCompile>
-    <ClCompile Include="..\MAIN_ADVECTION2D\src\LaxWendroffDimY.cpp">
-      <Filter>MainCode\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\MAIN_ADVECTION2D\src\LaxWendroffDimX.cpp">
-      <Filter>MainCode\src</Filter>
+    <ClCompile Include="..\MAIN_ADVECTION2D\src\DonerCellUpWind.cpp">
+      <Filter>MainCode\src\Solver</Filter>
     </ClCompile>
     <ClCompile Include="..\MAIN_ADVECTION2D\src\LaxWendroffDimSplit.cpp">
-      <Filter>MainCode\src</Filter>
+      <Filter>MainCode\src\Solver</Filter>
     </ClCompile>
-    <ClCompile Include="src\SquarWaveValidation.cpp" />
-    <ClCompile Include="src\StaticFunctions.cpp" />
-    <ClCompile Include="MAIN_ADVECTION2D_gTest.cpp" />
-    <ClCompile Include="src\ParallelValidation.cpp" />
+    <ClCompile Include="..\MAIN_ADVECTION2D\src\LaxWendroffDimX.cpp">
+      <Filter>MainCode\src\Solver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MAIN_ADVECTION2D\src\LaxWendroffDimY.cpp">
+      <Filter>MainCode\src\Solver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MAIN_ADVECTION2D\src\Solver.cpp">
+      <Filter>MainCode\src\Solver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MAIN_ADVECTION2D\src\LaxWendroff.cpp">
+      <Filter>MainCode\src\Solver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MAIN_ADVECTION2D\src\Field.cpp">
+      <Filter>MainCode\src\Descrete</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MAIN_ADVECTION2D\src\Grid.cpp">
+      <Filter>MainCode\src\Descrete</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MAIN_ADVECTION2D\stackoverflow\stackoverflow.cpp">
+      <Filter>MainCode\stackoverflow</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MAIN_ADVECTION2D\type\type.cpp">
+      <Filter>MainCode\type</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Examples.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\MAIN_ADVECTION2D\type\type.h">
-      <Filter>MainCode\type</Filter>
+    <ClInclude Include="src\D2Q2xStencilTest.h">
+      <Filter>Stencil test</Filter>
     </ClInclude>
-    <ClInclude Include="..\MAIN_ADVECTION2D\stackoverflow\stackoverflow.h">
-      <Filter>MainCode\stackoverflow</Filter>
+    <ClInclude Include="src\D2Q2yStencilTest.h">
+      <Filter>Stencil test</Filter>
     </ClInclude>
-    <ClInclude Include="..\MAIN_ADVECTION2D\src\Field.h">
-      <Filter>MainCode\src</Filter>
+    <ClInclude Include="src\D2Q4StencilTest.h">
+      <Filter>Stencil test</Filter>
     </ClInclude>
-    <ClInclude Include="..\MAIN_ADVECTION2D\src\Grid.h">
-      <Filter>MainCode\src</Filter>
+    <ClInclude Include="src\D2Q9StencilTest.h">
+      <Filter>Stencil test</Filter>
     </ClInclude>
-    <ClInclude Include="..\MAIN_ADVECTION2D\src\Stencil.h">
-      <Filter>MainCode\src</Filter>
+    <ClInclude Include="src\LaxWendroffTest.h">
+      <Filter>Solver test</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DonerCellUpWindTest.h">
+      <Filter>Solver test</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CornerTransUpWindTest.h">
+      <Filter>Solver test</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LaxWendroffDimSplitTest.h">
+      <Filter>Solver test</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BumpValidation.h">
+      <Filter>Verification</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SquarWaveValidation.h">
+      <Filter>Verification</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GridTest.h">
+      <Filter>Descrete test</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ParallelValidation.h">
+      <Filter>ParallelValidation</Filter>
     </ClInclude>
     <ClInclude Include="..\MAIN_ADVECTION2D\IO\console.h">
       <Filter>MainCode\IO</Filter>
@@ -146,69 +190,54 @@
     <ClInclude Include="..\MAIN_ADVECTION2D\IO\vtk.h">
       <Filter>MainCode\IO</Filter>
     </ClInclude>
-    <ClInclude Include="src\GridTest.h" />
-    <ClInclude Include="..\MAIN_ADVECTION2D\src\D2Q4Stencil.h">
-      <Filter>MainCode\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\MAIN_ADVECTION2D\src\Laplacian.h">
-      <Filter>MainCode\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\MAIN_ADVECTION2D\src\Solver.h">
-      <Filter>MainCode\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\MAIN_ADVECTION2D\src\D2Q9Stencil.h">
-      <Filter>MainCode\src</Filter>
-    </ClInclude>
     <ClInclude Include="..\MAIN_ADVECTION2D\src\D2Q2xStencil.h">
-      <Filter>MainCode\src</Filter>
+      <Filter>MainCode\src\Stencil</Filter>
     </ClInclude>
     <ClInclude Include="..\MAIN_ADVECTION2D\src\D2Q2yStencil.h">
-      <Filter>MainCode\src</Filter>
+      <Filter>MainCode\src\Stencil</Filter>
     </ClInclude>
-    <ClInclude Include="src\D2Q2xStencilTest.h">
-      <Filter>Stencil</Filter>
+    <ClInclude Include="..\MAIN_ADVECTION2D\src\D2Q4Stencil.h">
+      <Filter>MainCode\src\Stencil</Filter>
     </ClInclude>
-    <ClInclude Include="src\D2Q2yStencilTest.h">
-      <Filter>Stencil</Filter>
+    <ClInclude Include="..\MAIN_ADVECTION2D\src\D2Q9Stencil.h">
+      <Filter>MainCode\src\Stencil</Filter>
     </ClInclude>
-    <ClInclude Include="src\D2Q4StencilTest.h">
-      <Filter>Stencil</Filter>
-    </ClInclude>
-    <ClInclude Include="src\D2Q9StencilTest.h">
-      <Filter>Stencil</Filter>
-    </ClInclude>
-    <ClInclude Include="src\LaxWendroffTest.h">
-      <Filter>Solver</Filter>
-    </ClInclude>
-    <ClInclude Include="..\MAIN_ADVECTION2D\src\LaxWendroff.h">
-      <Filter>MainCode\src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\BumpValidation.h" />
-    <ClInclude Include="src\DonerCellUpWindTest.h">
-      <Filter>Solver</Filter>
-    </ClInclude>
-    <ClInclude Include="..\MAIN_ADVECTION2D\src\DonerCellUpWind.h">
-      <Filter>MainCode\src</Filter>
+    <ClInclude Include="..\MAIN_ADVECTION2D\src\Stencil.h">
+      <Filter>MainCode\src\Stencil</Filter>
     </ClInclude>
     <ClInclude Include="..\MAIN_ADVECTION2D\src\CornerTransUpWind.h">
-      <Filter>MainCode\src</Filter>
+      <Filter>MainCode\src\Solver</Filter>
     </ClInclude>
-    <ClInclude Include="src\CornerTransUpWindTest.h">
-      <Filter>Solver</Filter>
-    </ClInclude>
-    <ClInclude Include="src\LaxWendroffDimSplitTest.h">
-      <Filter>Solver</Filter>
-    </ClInclude>
-    <ClInclude Include="..\MAIN_ADVECTION2D\src\LaxWendroffDimY.h">
-      <Filter>MainCode\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\MAIN_ADVECTION2D\src\LaxWendroffDimX.h">
-      <Filter>MainCode\src</Filter>
+    <ClInclude Include="..\MAIN_ADVECTION2D\src\DonerCellUpWind.h">
+      <Filter>MainCode\src\Solver</Filter>
     </ClInclude>
     <ClInclude Include="..\MAIN_ADVECTION2D\src\LaxWendroffDimSplit.h">
-      <Filter>MainCode\src</Filter>
+      <Filter>MainCode\src\Solver</Filter>
     </ClInclude>
-    <ClInclude Include="src\SquarWaveValidation.h" />
-    <ClInclude Include="src\ParallelValidation.h" />
+    <ClInclude Include="..\MAIN_ADVECTION2D\src\LaxWendroffDimX.h">
+      <Filter>MainCode\src\Solver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\MAIN_ADVECTION2D\src\LaxWendroffDimY.h">
+      <Filter>MainCode\src\Solver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\MAIN_ADVECTION2D\src\Solver.h">
+      <Filter>MainCode\src\Solver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\MAIN_ADVECTION2D\src\LaxWendroff.h">
+      <Filter>MainCode\src\Solver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\MAIN_ADVECTION2D\src\Field.h">
+      <Filter>MainCode\src\Descrete</Filter>
+    </ClInclude>
+    <ClInclude Include="..\MAIN_ADVECTION2D\src\Grid.h">
+      <Filter>MainCode\src\Descrete</Filter>
+    </ClInclude>
+    <ClInclude Include="..\MAIN_ADVECTION2D\stackoverflow\stackoverflow.h">
+      <Filter>MainCode\stackoverflow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\MAIN_ADVECTION2D\type\type.h">
+      <Filter>MainCode\type</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Examples.h" />
   </ItemGroup>
 </Project>

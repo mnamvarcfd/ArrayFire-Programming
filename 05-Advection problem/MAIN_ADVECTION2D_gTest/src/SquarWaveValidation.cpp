@@ -4,10 +4,10 @@ SquarWaveValidation::SquarWaveValidation()
 {
 	std::cout << "SquarWaveValidation" << std::endl;
 
-	a = 1.0;
-	b = 0.0;
+	a = 0.5;
+	b = -0.5;
 
-	double n = 1.0;
+	double n = 2.0;
 	double lambda = min(abs(1.0 / cos(atan2(b, a))), abs(1.0 / cos(atan2(b, a))));
 	tFinal = n * lambda / sqrt(a * a + b * b);
 	std::cout << "tFinal: " << tFinal << std::endl;
@@ -45,7 +45,7 @@ static double SquarWave(double x, double y) {
 INSTANTIATE_TEST_CASE_P(Verification, SquarWaveValidation, ::testing::Values(0) );
 
 
-int SquarWaveGridSize[] = { 24, 48, 96, 192 /*, 348, 768, 1536*/ };
+int SquarWaveGridSize[] = { 24, 48, 96, 192 , 348, 768, 1536 };
 
 TEST_P(SquarWaveValidation, laxWendroff) {
 
@@ -58,27 +58,28 @@ TEST_P(SquarWaveValidation, laxWendroff) {
 	for (int i = 0; i < sizeof(SquarWaveGridSize) / 4; i++) {
 
 		int nx = SquarWaveGridSize[i];
-		int ny = SquarWaveGridSize[i];
-		double xMin = -0.5;
-		double xMax = 0.5;
-		double yMin = -0.5;
-		double yMax = 0.5;
+		int ny = nx;
+		double dx = 0.5 * (1.0 / (nx));
+		double xMin = -0.5 + dx;
+		double xMax = 0.5 - dx;
+		double yMin = -0.5 + dx;
+		double yMax = 0.5 - dx;
 
 
 		U = Field(nx, ny, xMin, xMax, yMin, yMax);
 		U.init(&SquarWave);
 
-		LaxWendroff solver = LaxWendroff(U, 0.5, -0.5);
+		LaxWendroff solver = LaxWendroff(U, a, b);
 
-
-		solver.solve(0.9, 10e6, 2.0);
+		solver.solve(0.5, 10e6, tFinal);
+		//solver.solveParallel(0.5, tFinal);
 
 
 		Ua = Field(nx, ny, xMin, xMax, yMin, yMax);
-		Ua.init(&SquarWave, 0.5, -0.5, 2.0);
+		Ua.init(&SquarWave, a, b, 2.0);
 
 
-		//Calculating the L2 error
+		//Calculating the L1 error
 		double error = 0.0;
 		for (int j = 0; j < U.get_nNode(); j++) {
 			error += abs(U.var[j] - Ua.var[j]);
@@ -104,25 +105,27 @@ TEST_P(SquarWaveValidation, laxWendroffDimSplit) {
 	for (int i = 0; i < sizeof(SquarWaveGridSize) / 4; i++) {
 
 		int nx = SquarWaveGridSize[i];
-		int ny = SquarWaveGridSize[i];
-		double xMin = -0.5;
-		double xMax = 0.5;
-		double yMin = -0.5;
-		double yMax = 0.5;
+		int ny = nx;
+		double dx = 0.5 * (1.0 / (nx));
+		double xMin = -0.5 + dx;
+		double xMax = 0.5 - dx;
+		double yMin = -0.5 + dx;
+		double yMax = 0.5 - dx;
 
 
 		U = Field(nx, ny, xMin, xMax, yMin, yMax);
 		U.init(&SquarWave);
 
 
-		LaxWendroffDimSplit solver = LaxWendroffDimSplit(U, 0.5, -0.5);
+		LaxWendroffDimSplit solver = LaxWendroffDimSplit(U, a, b);
 
 
-		solver.solve(0.9, 10e6, 2.0);
+		solver.solve(0.5, 10e6, tFinal);
+		//solver.solveParallel(0.5, tFinal);
 
 
 		Ua = Field(nx, ny, xMin, xMax, yMin, yMax);
-		Ua.init(&SquarWave, 0.5, -0.5, 2.0);
+		Ua.init(&SquarWave, a, b, tFinal);
 
 
 		//Calculating the L2 error
@@ -152,7 +155,7 @@ TEST_P(SquarWaveValidation, donerCellUpWind) {
 
 		int nx = SquarWaveGridSize[i];
 		int ny = nx;
-		double dx = 0.5 * (1.0 / (nx/* - 1*/));
+		double dx = 0.5 * (1.0 / (nx));
 		double xMin = -0.5 + dx;
 		double xMax = 0.5 - dx;
 		double yMin = -0.5 + dx;
@@ -167,6 +170,7 @@ TEST_P(SquarWaveValidation, donerCellUpWind) {
 
 
 		solver.solve(0.5, 10e6, tFinal);
+		//solver.solveParallel(0.5, tFinal);
 
 
 		Ua = Field(nx, ny, xMin, xMax, yMin, yMax);
@@ -199,28 +203,29 @@ TEST_P(SquarWaveValidation, cornerTransUpWind) {
 	for (int i = 0; i < sizeof(SquarWaveGridSize) / 4; i++) {
 
 		int nx = SquarWaveGridSize[i];
-		int ny = SquarWaveGridSize[i];
-		double xMin = -0.5;
-		double xMax = 0.5;
-		double yMin = -0.5;
-		double yMax = 0.5;
+		int ny = nx;
+		double dx = 0.5 * (1.0 / (nx));
+		double xMin = -0.5 + dx;
+		double xMax = 0.5 - dx;
+		double yMin = -0.5 + dx;
+		double yMax = 0.5 - dx;
 
 
 		U = Field(nx, ny, xMin, xMax, yMin, yMax);
 		U.init(&SquarWave);
 
 
-		CornerTransUpWind solver = CornerTransUpWind(U, 0.5, -0.5);
+		CornerTransUpWind solver = CornerTransUpWind(U, a, b);
 
-
-		solver.solve(0.9, 10e6, 2.0);
+		solver.solve(0.5, 10e6, tFinal);
+		//solver.solveParallel(0.5, tFinal);
 
 
 		Ua = Field(nx, ny, xMin, xMax, yMin, yMax);
-		Ua.init(&SquarWave, 0.5, -0.5, 2.0);
+		Ua.init(&SquarWave, a, b, tFinal);
 
 
-		//Calculating the L2 error
+		//Calculating the L1 error
 		double error = 0.0;
 		for (int j = 0; j < U.get_nNode(); j++) {
 			error += abs(U.var[j] - Ua.var[j]);
@@ -234,50 +239,6 @@ TEST_P(SquarWaveValidation, cornerTransUpWind) {
 
 	fclose(file);
 }
-
-
-
-TEST_P(SquarWaveValidation, Example) {
-
-	int nx = 48;
-	int ny = nx;
-	double dx = 0.5 * (1.0 / (nx/* - 1*/));
-	double xMin = -0.5 + dx;
-	double xMax = 0.5 - dx;
-	double yMin = -0.5 + dx;
-	double yMax = 0.5 - dx;
-
-
-	U = Field(nx, ny, xMin, xMax, yMin, yMax);
-	U.init(&SquarWave);
-
-
-	DonerCellUpWind solver = DonerCellUpWind(U, a, b);
-	//LaxWendroff solver = LaxWendroff(U, 0.5, -0.5);
-	//DonerCellUpWind solver = DonerCellUpWind(U, 0.5, -0.5);
-	//CornerTransUpWind solver = CornerTransUpWind(U, 0.5, -0.5);
-	//LaxWendroffDimSplit solver = LaxWendroffDimSplit(U, 0.5, -0.5);
-
-
-	solver.solve(0.5, 10e6, tFinal);
-	U.write("numericalSolution");
-
-
-	Ua = Field(nx, ny, xMin, xMax, yMin, yMax);
-	Ua.init(&SquarWave, a, b, tFinal);
-	Ua.write("analyticalSolution");
-
-
-	//Calculating the L1 error
-	double error = 0.0;
-	for (int j = 0; j < U.get_nNode(); j++) {
-		error += abs(U.var[j] - Ua.var[j]);
-	}
-	error = error / U.get_nNode();
-
-	printf("%.8f  \n", error);
-}
-
 
 
 

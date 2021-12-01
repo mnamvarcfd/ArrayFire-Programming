@@ -30,8 +30,6 @@ void D2Q2xStencil::set_coeff2D(double **coeff2D_)
 	coeff1D[1] = coeff2D_[2][1];
 	coeff1D[2] = coeff2D_[0][1];
 
-	//printf("set_coeff2D--D2Q2xStencil---- is: %f \n", coeff1D[0]);
-
 }
 
 

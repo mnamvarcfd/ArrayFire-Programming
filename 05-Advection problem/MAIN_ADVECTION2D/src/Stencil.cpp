@@ -30,14 +30,12 @@ af::array Stencil::getFilter()
 
 	for (int j = 0; j < 3; j++) {
 		for (int i = 0; i < 3; i++) {
-			//if((coeff2D[i][j])>0.0)
 			creatAFval(i, j, coeff2D[i][j]);
 		}
 	}
 
 	af::array filter(3, 3, coeff_af);
 
-	//af_print(filter);
 	return filter;
 }
 
@@ -88,7 +86,6 @@ void Stencil::creatAFval(int i, int j, double val)
 
 	int index = jj * 3 + ii;
 	coeff_af[index] = val;
-	//printf("%d ===============: %f \n", index, coeff_af[index]);
 }
 
 

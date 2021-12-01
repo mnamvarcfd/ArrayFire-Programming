@@ -52,8 +52,7 @@ void LaxWendroffDimY::solveParallel(double CFL_, int nMaxIter, double totalTime)
 
 void LaxWendroffDimY::setCoeff()
 {
-	double dx = field.get_dx();
-	double dy = field.get_dy();
+
 	double bdtdy = b * dt / (dy);
 	double bdtdy2 = bdtdy * bdtdy;
 

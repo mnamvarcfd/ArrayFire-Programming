@@ -1,10 +1,8 @@
 #pragma once
-//#include "Solver.h"
-//#include "Solver.cpp"
 #include "LaxWendroffDimX.h"
 #include "LaxWendroffDimY.h"
 
-class LaxWendroffDimSplit/*: public Solver()*/
+class LaxWendroffDimSplit
 {
 
 public:

@@ -55,7 +55,6 @@
     <ClCompile Include="..\MAIN_ADVECTION2D\src\DonerCellUpWind.cpp" />
     <ClCompile Include="..\MAIN_ADVECTION2D\src\Field.cpp" />
     <ClCompile Include="..\MAIN_ADVECTION2D\src\Grid.cpp" />
-    <ClCompile Include="..\MAIN_ADVECTION2D\src\Laplacian.cpp" />
     <ClCompile Include="..\MAIN_ADVECTION2D\src\LaxWendroff.cpp" />
     <ClCompile Include="..\MAIN_ADVECTION2D\src\LaxWendroffDimSplit.cpp" />
     <ClCompile Include="..\MAIN_ADVECTION2D\src\LaxWendroffDimX.cpp" />
@@ -72,12 +71,12 @@
     <ClCompile Include="src\D2Q4StencilTest.cpp" />
     <ClCompile Include="src\D2Q9StencilTest.cpp" />
     <ClCompile Include="src\DonerCellUpWindTest.cpp" />
+    <ClCompile Include="src\Examples.cpp" />
     <ClCompile Include="src\GridTest.cpp" />
     <ClCompile Include="src\LaxWendroffDimSplitTest.cpp" />
     <ClCompile Include="src\LaxWendroffTest.cpp" />
     <ClCompile Include="src\ParallelValidation.cpp" />
     <ClCompile Include="src\SquarWaveValidation.cpp" />
-    <ClCompile Include="src\StaticFunctions.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\MAIN_ADVECTION2D\IO\console.h" />
@@ -92,7 +91,6 @@
     <ClInclude Include="..\MAIN_ADVECTION2D\src\DonerCellUpWind.h" />
     <ClInclude Include="..\MAIN_ADVECTION2D\src\Field.h" />
     <ClInclude Include="..\MAIN_ADVECTION2D\src\Grid.h" />
-    <ClInclude Include="..\MAIN_ADVECTION2D\src\Laplacian.h" />
     <ClInclude Include="..\MAIN_ADVECTION2D\src\LaxWendroff.h" />
     <ClInclude Include="..\MAIN_ADVECTION2D\src\LaxWendroffDimSplit.h" />
     <ClInclude Include="..\MAIN_ADVECTION2D\src\LaxWendroffDimX.h" />
@@ -108,6 +106,7 @@
     <ClInclude Include="src\D2Q4StencilTest.h" />
     <ClInclude Include="src\D2Q9StencilTest.h" />
     <ClInclude Include="src\DonerCellUpWindTest.h" />
+    <ClInclude Include="src\Examples.h" />
     <ClInclude Include="src\GridTest.h" />
     <ClInclude Include="src\LaxWendroffDimSplitTest.h" />
     <ClInclude Include="src\LaxWendroffTest.h" />

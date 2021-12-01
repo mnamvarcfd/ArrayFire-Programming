@@ -8,6 +8,9 @@ class Solver
 public:
 	Field field;
 
+	double dx;
+	double dy;
+
 	double* varNp1;
 	double* varN;
 	double** coeff2D;
@@ -19,19 +22,20 @@ public:
 
 	T stencil;
     
-
-
-
 	int nReq;
 	int* iReq;
 	af::array varNp1_d;
 	af::array varN_d;
+	af::array iBoundNode;
 
 protected:
 	virtual void setCoeff() = 0;
 	virtual void timeStep() = 0;
 	void convolve2NaiveCpp();
 	void applyBC();
+	void applyBCtransData();
+
+	void applyBCgfor();
 
 
 
@@ -54,5 +58,5 @@ public:
 	void solveParallel(double CFL_, double totalTime);
 
 	void reqData();
-	virtual void solve(double CFL_, int nMaxIter, double totalTime) = 0;
+	void solve(double CFL_, int nMaxIter, double totalTime);
 };

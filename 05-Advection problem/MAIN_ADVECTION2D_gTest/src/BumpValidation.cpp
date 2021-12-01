@@ -14,10 +14,10 @@ BumpValidation::BumpValidation()
 	std::cout << "BumpValidation" << std::endl;	
 
 
-	//a = 0.5;
-	//b = -0.3;
-	a = 1.0;
-	b = 0.0;
+	a = 0.5;
+	b = -0.3;
+	//a = 1.0;
+	//b = 0.0;
 
 	double n = 1.0;
 	double lambda = min(abs(1.0 / cos(atan2(b, a))), abs(1.0 / cos(atan2(b, a))));
@@ -47,7 +47,7 @@ void BumpValidation::TearDown()
 INSTANTIATE_TEST_CASE_P(Verification, BumpValidation, ::testing::Values(0) );
 
 
-int bumpGridSize[] = { 21, 41, 81, 161/*, 321, 641, 1281*/ };
+int bumpGridSize[] = { 21, 41, 81, 161, 321, 641, 1281 };
 
 TEST_P(BumpValidation, laxWendroff) {
 
@@ -240,49 +240,6 @@ TEST_P(BumpValidation, cornerTransUpWind) {
 	fclose(file);
 }
 
-
-
-
-
-
-TEST_P(BumpValidation, Example) {
-
-	int nx = 21;
-	int ny = nx;
-	double dx = 0.5 * (1.0 / (nx));
-	double xMin =-0.5 + dx;
-	double xMax = 0.5 - dx;
-	double yMin =-0.5 + dx;
-	double yMax = 0.5 - dx;
-
-
-	U = Field(nx, ny, xMin, xMax, yMin, yMax);
-	U.init(&bumpValid);
-	//U.write("init");
-
-
-	//LaxWendroff solver = LaxWendroff(U, a, b);
-	DonerCellUpWind solver = DonerCellUpWind(U, a, b);
-	//CornerTransUpWind solver = CornerTransUpWind(U, a, b);
-	//LaxWendroffDimSplit solver = LaxWendroffDimSplit(U, a, b);
-
-	solver.solve(0.9, 10e6, tFinal);
-	U.write("numericalSolution");
-
-
-	Ua = Field(nx, ny, xMin, xMax, yMin, yMax);
-	Ua.init(&bumpValid, a, b, tFinal);
-	Ua.write("analyticalSolution");
-
-	//Calculating the L2 error
-	double error = 0.0;
-	for (int j = 0; j < U.get_nNode(); j++) {
-		error += abs(U.var[j] - Ua.var[j]);
-	}
-	error = error / U.get_nNode();
-
-	printf("%.8f  \n", error);
-}
 
 
 

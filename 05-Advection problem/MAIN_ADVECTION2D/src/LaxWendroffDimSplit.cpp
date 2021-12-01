@@ -36,8 +36,6 @@ void LaxWendroffDimSplit::solve(double CFL_, int nMaxIter, double totalTime)
 	laxWendroffDimX.setCoeff();
 	laxWendroffDimY.setCoeff();
 
-
-
 	int nIter = (totalTime / dt);
 
 	int it = 0;
@@ -132,5 +130,4 @@ void LaxWendroffDimSplit::timeStep() {
 
 	dt = CFL / max(abs(a / field.get_dx()), abs(b / field.get_dy()));
 
-	//printf("Time step------------ is: %f \n", CFL / max(abs(a / field.get_dx()), abs(b / field.get_dy())));
 }

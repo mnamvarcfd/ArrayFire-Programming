@@ -46,16 +46,12 @@ void LaxWendroffDimX::solveParallel(double CFL_, int nMaxIter, double totalTime)
 
 void LaxWendroffDimX::setCoeff()
 {
-	double dx = field.get_dx();
-	double dy = field.get_dy();
 	double adtdx = a * dt / dx;
 	double adtdx2 = adtdx * adtdx;
 
 	coeff2D[1][1] = 1.0 - adtdx2;
 	coeff2D[2][1] = 0.5*(adtdx2 - adtdx);
 	coeff2D[0][1] = 0.5*(adtdx2 + adtdx);
-
-	//printf("set_coeff2D--LaxWendroffDimX---- is: %f \n", coeff2D[1][1]);
 
 	stencil.set_coeff2D(coeff2D);
 
@@ -66,5 +62,4 @@ void LaxWendroffDimX::timeStep() {
 
 	dt = CFL/max(abs(a/field.get_dx()) , abs(b/field.get_dy()) );
 
-	//printf("Time step------------ is: %f \n", max(abs(a / field.get_dx()), abs(b / field.get_dy())));
 }

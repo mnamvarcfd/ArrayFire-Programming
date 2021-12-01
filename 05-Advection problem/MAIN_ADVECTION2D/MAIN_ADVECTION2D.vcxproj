@@ -29,7 +29,6 @@
     <ClCompile Include="src\D2Q9Stencil.cpp" />
     <ClCompile Include="src\CornerTransUpWind.cpp" />
     <ClCompile Include="src\Field.cpp" />
-    <ClCompile Include="src\Laplacian.cpp" />
     <ClCompile Include="src\Grid.cpp" />
     <ClCompile Include="src\DonerCellUpWind.cpp" />
     <ClCompile Include="src\LaxWendroffDimSplit.cpp" />
@@ -52,7 +51,6 @@
     <ClInclude Include="src\D2Q9Stencil.h" />
     <ClInclude Include="src\CornerTransUpWind.h" />
     <ClInclude Include="src\Field.h" />
-    <ClInclude Include="src\Laplacian.h" />
     <ClInclude Include="src\Grid.h" />
     <ClInclude Include="src\DonerCellUpWind.h" />
     <ClInclude Include="src\LaxWendroffDimSplit.h" />

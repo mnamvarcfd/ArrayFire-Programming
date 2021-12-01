@@ -16,12 +16,6 @@
     <ClCompile Include="type\type.cpp">
       <Filter>type</Filter>
     </ClCompile>
-    <ClCompile Include="src\Field.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Grid.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="MAIN_ADVECTION2D.cpp" />
     <ClCompile Include="src\D2Q2xStencil.cpp">
       <Filter>src\Stencil</Filter>
@@ -41,9 +35,6 @@
     <ClCompile Include="src\Solver.cpp">
       <Filter>src\Solver</Filter>
     </ClCompile>
-    <ClCompile Include="src\Laplacian.cpp">
-      <Filter>src\Solver</Filter>
-    </ClCompile>
     <ClCompile Include="src\LaxWendroff.cpp">
       <Filter>src\Solver</Filter>
     </ClCompile>
@@ -61,6 +52,12 @@
     </ClCompile>
     <ClCompile Include="src\CornerTransUpWind.cpp">
       <Filter>src\Solver</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Field.cpp">
+      <Filter>src\Descrete</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Grid.cpp">
+      <Filter>src\Descrete</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -82,6 +79,9 @@
     <Filter Include="src\Solver">
       <UniqueIdentifier>{5cee9d15-951e-45cf-972b-25593ff5be81}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Descrete">
+      <UniqueIdentifier>{1f7157b0-6026-4b46-9266-58fa3c73739e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IO\file.h">
@@ -102,12 +102,6 @@
     <ClInclude Include="type\type.h">
       <Filter>type</Filter>
     </ClInclude>
-    <ClInclude Include="src\Field.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Grid.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="src\D2Q2xStencil.h">
       <Filter>src\Stencil</Filter>
     </ClInclude>
@@ -124,9 +118,6 @@
       <Filter>src\Stencil</Filter>
     </ClInclude>
     <ClInclude Include="src\Solver.h">
-      <Filter>src\Solver</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Laplacian.h">
       <Filter>src\Solver</Filter>
     </ClInclude>
     <ClInclude Include="src\LaxWendroff.h">
@@ -146,6 +137,12 @@
     </ClInclude>
     <ClInclude Include="src\CornerTransUpWind.h">
       <Filter>src\Solver</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Field.h">
+      <Filter>src\Descrete</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Grid.h">
+      <Filter>src\Descrete</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

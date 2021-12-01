@@ -10,15 +10,15 @@ private:
 	virtual void setCoeff();
 	void timeStep();
 
-	void applyBCpar();
+	//void applyBCpar();
 
 public:
 	DonerCellUpWind();
 	~DonerCellUpWind();
 	DonerCellUpWind(Field& field_, double a, double b);
 
-	void solve(double CFL_, int nMaxIter, double totalTime);
+	//void solve(double CFL_, int nMaxIter, double totalTime);
 
-	void solveParallel(double CFL_, double totalTime);
+	//void solveParallel(double CFL_, double totalTime);
 
 };

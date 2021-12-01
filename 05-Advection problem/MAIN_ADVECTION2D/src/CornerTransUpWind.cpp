@@ -18,93 +18,8 @@ CornerTransUpWind::CornerTransUpWind(Field &field_, double a_, double b_):Solver
 }
 
 
-void CornerTransUpWind::solve(double CFL_, int nMaxIter, double totalTime)
-{
-
-	CFL = CFL_;
-
-	timeStep();
-
-	int nIter = /*ceil*/(totalTime / dt);
-
-	setCoeff();
-
-	double time = 0.0;
-	int it = 0;
-	while (it <= nIter)
-	//while (it < 10)
-	{
-		if (it == nIter) dt = totalTime - nIter * dt;
-
-
-		for (int iNode = 0; iNode < field.get_nNode(); iNode++) {
-			varN[iNode] = varNp1[iNode];
-		}
-
-		convolve2NaiveCpp();
-
-		applyBC();
-
-		it++;
-	}
-
-
-}
-
-void CornerTransUpWind::solveParallel(double CFL_, double totalTime)
-{
-
-	CFL = CFL_;
-
-	timeStep();
-
-	int nIter = (totalTime / dt);
-
-	setCoeff();
-
-
-
-	reqData();
-
-	af::array filter = stencil.getFilter();
-
-	af::array A_d(field.get_nNode(), varNp1);
-
-	varNp1_d = af::moddims(A_d, field.get_nx(), field.get_ny());
-
-
-	int it = 0;
-	while (it <= nIter)
-	//while (it < 10)
-	{
-
-		if (it == nIter) dt = totalTime - nIter * dt;
-
-		varN_d = varNp1_d;
-
-		varNp1_d = convolve2(varN_d, filter);
-
-		D2H(nReq, iReq, varN_d, varN);
-
-		applyBC();
-
-		H2D(field.nBoundNode, field.iBoundNode, varNp1, varNp1_d);
-
-		it++;
-
-	}
-
-	D2H(varNp1_d, varNp1);
-
-}
-
-
 void CornerTransUpWind::setCoeff()
 {
-	//double dx = field.get_dx();
-	//double dy = field.get_dy();
-	double dx = 1. / (field.get_nx());
-	double dy = 1. / (field.get_nx());
 
 	double dxdy = dx*dy;
 	double dt2dxdy = dt*dt / (dx * dy);
@@ -129,11 +44,6 @@ void CornerTransUpWind::setCoeff()
 
 
 void CornerTransUpWind::timeStep() {
-
-	//double dx = field.get_dx();
-	//double dy = field.get_dy();
-	double dx = 1. / (field.get_nx());
-	double dy = 1. / (field.get_nx());
 
 	dt = CFL / max(abs(a/dx) , abs(b/dy));
 
