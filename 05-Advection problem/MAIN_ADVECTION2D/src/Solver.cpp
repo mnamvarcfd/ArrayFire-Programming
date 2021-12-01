@@ -58,32 +58,6 @@ void Solver<T>::convolve2NaiveCpp()
 }
 
 
-template<class T>
-void Solver<T>::applyBC()
-{
-	//An array to store the index of neighborin node based on the used stencil
-	int* iNeib = new int[stencil.nNeib];
-
-	//Traversing all the nodes in the discrete domain
-	for (int i = 0; i < field.nBoundNode; i++) {
-
-		//Just boundary nodes participate to create rifht hand side 
-		int iNode = field.iBoundNode[i];
-
-		//Find the index of all the neighboring nodes
-		stencil.get_iNeib(iNode, iNeib);
-
-		varNp1[iNode] = 0.0;
-		for (int i = 0; i < stencil.nNeib; i++) {
-			int neibIdx = iNeib[i];
-			varNp1[iNode] += stencil.coeff1D[i] * varN[neibIdx];
-		}
-
-	}
-
-
-}
-
 //template<class T>
 //void Solver<T>::applyBC()
 //{
@@ -91,24 +65,50 @@ void Solver<T>::applyBC()
 //	int* iNeib = new int[stencil.nNeib];
 //
 //	//Traversing all the nodes in the discrete domain
-//	for (int iNode = 0; iNode < field.get_nNode(); iNode++) {
+//	for (int i = 0; i < field.nBoundNode; i++) {
 //
 //		//Just boundary nodes participate to create rifht hand side 
-//		if (field.isBound[iNode] == false) continue;
+//		int iNode = field.iBoundNode[i];
 //
 //		//Find the index of all the neighboring nodes
 //		stencil.get_iNeib(iNode, iNeib);
 //
 //		varNp1[iNode] = 0.0;
 //		for (int i = 0; i < stencil.nNeib; i++) {
-//			int j = iNeib[i];
-//			varNp1[iNode] += stencil.coeff1D[i] * varN[j];
+//			int neibIdx = iNeib[i];
+//			varNp1[iNode] += stencil.coeff1D[i] * varN[neibIdx];
 //		}
 //
 //	}
 //
 //
 //}
+
+template<class T>
+void Solver<T>::applyBC()
+{
+	//An array to store the index of neighborin node based on the used stencil
+	int* iNeib = new int[stencil.nNeib];
+
+	//Traversing all the nodes in the discrete domain
+	for (int iNode = 0; iNode < field.get_nNode(); iNode++) {
+
+		//Just boundary nodes participate to create rifht hand side 
+		if (field.isBound[iNode] == false) continue;
+
+		//Find the index of all the neighboring nodes
+		stencil.get_iNeib(iNode, iNeib);
+
+		varNp1[iNode] = 0.0;
+		for (int i = 0; i < stencil.nNeib; i++) {
+			int j = iNeib[i];
+			varNp1[iNode] += stencil.coeff1D[i] * varN[j];
+		}
+
+	}
+
+
+}
 
 template<class T>
 double Solver<T>::get_dt()
@@ -294,8 +294,8 @@ void Solver<T>::reqData()
 }
 
 
-template<class T>
-void Solver<T>::applyBCpar() {
+//template<class T>
+//void Solver<T>::applyBCpar() {
 
 	//reqData();
 
@@ -308,7 +308,7 @@ void Solver<T>::applyBCpar() {
 
 	//H2D(field.nBoundNode, field.iBoundNode, varNp1, varNp1_d);
 
-}
+//}
 
 
 

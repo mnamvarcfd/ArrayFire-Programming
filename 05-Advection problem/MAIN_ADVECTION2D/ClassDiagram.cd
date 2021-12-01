@@ -1,49 +1,64 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="Field" Collapsed="true">
-    <Position X="2" Y="2.75" Width="1.5" />
+  <Class Name="Field">
+    <Position X="3" Y="3" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
     <TypeIdentifier>
       <HashCode>AAAAAIAAAAAAAAAAAAAAIAAAAAAAAAIAAQAAAAACgAA=</HashCode>
       <FileName>src\Field.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Grid" Collapsed="true">
-    <Position X="2" Y="1.5" Width="1.5" />
+    <Position X="3" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>IAEEAgAIAAAAIQAAAAJokAAgAAgAEAAEAQARACCABTk=</HashCode>
       <FileName>src\Grid.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="D2Q2xStencil" Collapsed="true">
-    <Position X="12.5" Y="2.5" Width="1.5" />
+    <Position X="7.75" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAIAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAACACAA=</HashCode>
       <FileName>src\D2Q2xStencil.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="D2Q2yStencil" Collapsed="true">
-    <Position X="14.75" Y="2.5" Width="1.5" />
+    <Position X="7.75" Y="4.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAIAAAAAAAQQAAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
       <FileName>src\D2Q2yStencil.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="D2Q4Stencil" Collapsed="true">
-    <Position X="8" Y="2.5" Width="1.5" />
+    <Position X="7.75" Y="2.75" Width="1.5" />
+    <InheritanceLine Type="Stencil" FixedToPoint="true">
+      <Path>
+        <Point X="10.25" Y="3.125" />
+        <Point X="9.25" Y="3.125" />
+      </Path>
+    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AACAIAAAAAAAAQAAAAAAAAAAAAQAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>src\D2Q4Stencil.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="D2Q9Stencil" Collapsed="true">
-    <Position X="10.25" Y="2.5" Width="1.5" />
+    <Position X="7.75" Y="2" Width="1.5" />
+    <InheritanceLine Type="Stencil" ManuallyRouted="true" FixedToPoint="true">
+      <Path>
+        <Point X="10.25" Y="2.312" />
+        <Point X="9.25" Y="2.312" />
+      </Path>
+    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AAAAIAAAAAAAAQAAAAAAAAAAAIAAAAAAAAAEAAAAAAA=</HashCode>
       <FileName>src\D2Q9Stencil.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Stencil" Collapsed="true">
-    <Position X="11.25" Y="1.25" Width="1.5" />
+  <Class Name="Stencil">
+    <Position X="10.25" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AACAIAAAAAABQQAAAIAACAAQAAAABAAAAAAAAAAACAA=</HashCode>
       <FileName>src\Stencil.h</FileName>
@@ -56,36 +71,33 @@
       <FileName>src\CornerTransUpWind.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="DonerCellUpWind">
-    <Position X="1.5" Y="6.25" Width="1.5" />
-    <Compartments>
-      <Compartment Name="Methods" Collapsed="true" />
-    </Compartments>
+  <Class Name="DonerCellUpWind" Collapsed="true">
+    <Position X="2.5" Y="6.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AQAAAAAEAAQAAAAAAAAAAAAAAAAACAAAAAAAEAAAAgA=</HashCode>
+      <HashCode>AQAAACAEAAQAAAAAAAAAAAAAAAAACAAAAAAAEAAAAgA=</HashCode>
       <FileName>src\DonerCellUpWind.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="LaxWendroffDimSplit" Collapsed="true">
-    <Position X="9" Y="7.75" Width="1.5" />
+    <Position X="8.75" Y="7.75" Width="1.5" />
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
     <AssociationLine Name="laxWendroffDimX" Type="LaxWendroffDimX" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="9.75" Y="7.75" />
-        <Point X="9.75" Y="7.375" />
-        <Point X="10.75" Y="7.375" />
-        <Point X="10.75" Y="6.941" />
+        <Point X="9.5" Y="7.75" />
+        <Point X="9.5" Y="7.375" />
+        <Point X="10.25" Y="7.375" />
+        <Point X="10.25" Y="6.941" />
       </Path>
     </AssociationLine>
     <AssociationLine Name="laxWendroffDimY" Type="LaxWendroffDimY" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="9.75" Y="7.75" />
-        <Point X="9.75" Y="7.375" />
-        <Point X="8.75" Y="7.375" />
-        <Point X="8.75" Y="6.941" />
+        <Point X="9.5" Y="7.75" />
+        <Point X="9.5" Y="7.375" />
+        <Point X="8.5" Y="7.375" />
+        <Point X="8.5" Y="6.941" />
       </Path>
     </AssociationLine>
     <TypeIdentifier>
@@ -98,31 +110,34 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="LaxWendroffDimX" Collapsed="true">
-    <Position X="10" Y="6.25" Width="1.5" />
+    <Position X="9.5" Y="6.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AQAAAAAEAAAAAAAAAAAAEIAAAAAACAAAAAAAEAAACAA=</HashCode>
       <FileName>src\LaxWendroffDimX.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="LaxWendroffDimY" Collapsed="true">
-    <Position X="8" Y="6.25" Width="1.5" />
+    <Position X="7.75" Y="6.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AQAAAAAEAAAAAAAAAAAAEAABAAAACAAAAAAAEAAACAA=</HashCode>
       <FileName>src\LaxWendroffDimY.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Solver&lt;T&gt;">
-    <Position X="6" Y="1.25" Width="1.5" />
+    <Position X="6" Y="1.5" Width="1.5" />
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AwCAADBECAABAgEAAAAgAAkYAAAASAAgAQQCEgCAAAg=</HashCode>
+      <HashCode>AwCAABBECAABAgEAAAAgAAkYAAAASAEgAQQCEgCAAAg=</HashCode>
       <FileName>src\Solver.h</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="field" />
+    </ShowAsAssociation>
   </Class>
   <Class Name="LaxWendroff" Collapsed="true">
-    <Position X="3.75" Y="6.25" Width="1.5" />
+    <Position X="4.25" Y="6.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AQAAAAAEAAAAAAAAAAAACAAAAAAACAAAAEAAEAAAAAA=</HashCode>
       <FileName>src\LaxWendroff.h</FileName>

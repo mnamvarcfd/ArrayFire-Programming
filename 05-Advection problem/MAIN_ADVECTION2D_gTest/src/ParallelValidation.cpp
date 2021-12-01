@@ -24,7 +24,7 @@ ParallelValidation::ParallelValidation()
 	double n = 1.0;
 	double lambda = min(abs(1.0 / cos(atan2(b, a))), abs(1.0 / cos(atan2(b, a))));
 	tFinal = n * lambda / sqrt(a * a + b * b);
-	std::cout << "tFinal: " << tFinal << std::endl;
+	//std::cout << "tFinal: " << tFinal << std::endl;
 
 
 	int nx = 21;
@@ -167,8 +167,6 @@ TEST_P(ParallelValidation, Performance) {
 	af::setDevice(0);
 	af::info();
 
-	tFinal *= 1;
-
 	int nx = 1000;
 	int ny = nx;
 	double dx = 0.5 * (1.0 / nx);
@@ -183,7 +181,7 @@ TEST_P(ParallelValidation, Performance) {
 	DonerCellUpWind solver = DonerCellUpWind(U, a, b);
 
 	af::timer t1 = af::timer::start();
-	solver.solve(0.9, 10000, tFinal);
+	//solver.solve(0.9, 10000, tFinal);
 	double timeSer = af::timer::stop(t1);
 
 	printf("Time serial %g \n", timeSer);
@@ -198,7 +196,7 @@ TEST_P(ParallelValidation, Performance) {
 	printf("Time parallel %g \n", timePar);
 
 
-	printf("speed up %g = \n", timeSer/timePar);
+	printf("speed up %g = \n", 237.0/timePar);
 
 
 
@@ -210,6 +208,39 @@ TEST_P(ParallelValidation, Performance) {
 
 
 
+
+TEST_P(ParallelValidation, NaivCpp) {
+
+
+	int GSize[] = { 10e4, 10e5, 10e6, 10e7, 10e8 };
+
+	for (int i = 0; i < 5; i++) {
+
+		int nx = sqrt( (double)GSize[i]) ;
+		int ny = nx;
+		double dx = 0.5 * (1.0 / (nx));
+		double xMin = -0.5 + dx;
+		double xMax = 0.5 - dx;
+		double yMin = -0.5 + dx;
+		double yMax = 0.5 - dx;
+
+
+		Field U = Field(nx, ny, xMin, xMax, yMin, yMax);
+		U.init(&bumpParallel);
+
+
+		DonerCellUpWind solver = DonerCellUpWind(U, a, b);
+
+
+		af::timer t1 = af::timer::start();
+		solver.solve(0.9, 100, 2.0);
+		printf("Overal time Serial: %g \n", af::timer::stop(t1));
+
+
+	}
+
+	FAIL();
+}
 
 
 

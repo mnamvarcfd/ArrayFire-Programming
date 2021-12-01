@@ -10,7 +10,7 @@ private:
 	virtual void setCoeff();
 	void timeStep();
 
-	//void applyBC();
+	void applyBCpar();
 
 public:
 	DonerCellUpWind();

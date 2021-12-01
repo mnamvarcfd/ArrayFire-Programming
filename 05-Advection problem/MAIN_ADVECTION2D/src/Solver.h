@@ -40,7 +40,7 @@ protected:
 	void D2H(af::array A_d, double* A_h);
 	void D2H(int nData, int* iData, af::array Data_d, double* Data_h);
 	void H2D(int nData, int* iData, double* Data_h, af::array &Data_d);
-	void applyBCpar();
+
 
 
 public:

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GtaTestDurations xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Executable>C:\Users\monam.GPUSL2\Desktop\ArrayFire-Programming\05-Advection problem\MAIN_ADVECTION2D_gTest\workingDirectory\MAIN_ADVECTION2D_gTest.exe</Executable>
+  <TestDurations>
+    <TestDuration Test="Validation/ParallelValidation.Example/0" Duration="4114" />
+    <TestDuration Test="Validation/ParallelValidation.Performance/0" Duration="4323" />
+    <TestDuration Test="Validation/ParallelValidation.NaivCpp/0" Duration="0" />
+  </TestDurations>
+</GtaTestDurations>

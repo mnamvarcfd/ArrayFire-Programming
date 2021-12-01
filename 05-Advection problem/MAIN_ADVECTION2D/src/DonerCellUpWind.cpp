@@ -33,7 +33,7 @@ void DonerCellUpWind::solve(double CFL_, int nMaxIter, double totalTime)
 	double time = 0.0;
 	int it = 0;
 	//while (it <= nIter)
-		while (it < 1000)
+		while (it < 100)
 	{
 		if (it == nIter) dt = totalTime - nIter * dt;
 	
@@ -46,7 +46,7 @@ void DonerCellUpWind::solve(double CFL_, int nMaxIter, double totalTime)
 
 		it++;
 
-		time += dt;
+		//time += dt;
 	}
 
 	//printf("time   %.8f  \n", time);
@@ -90,7 +90,7 @@ void DonerCellUpWind::solveParallel(double CFL_, double totalTime)
 
 		//D2H(nReq, iReq, varN_d, varN);
 
-		//applyBC();
+		applyBCpar();
 
 		//H2D(field.nBoundNode, field.iBoundNode, varNp1, varNp1_d);
 
@@ -149,29 +149,47 @@ void DonerCellUpWind::timeStep() {
 }
 
 
-//
-//void DonerCellUpWind::applyBC()
-//{
-//	//An array to store the index of neighborin node based on the used stencil
-//	int* iNeib = new int[stencil.nNeib];
-//
-//	//Traversing all the nodes in the discrete domain
-//	for (int i = 0; i < field.nBoundNode; i++) {
-//
-//		//Just boundary nodes participate to create rifht hand side 
-//		int iNode = field.iBoundNode[i];
-//
-//		//Find the index of all the neighboring nodes
-//		stencil.get_iNeib(iNode, iNeib);
-//
-//		//varNp1_d(iNode) = 0.0;
-//		for (int i = 0; i < stencil.nNeib; i++) {
-//			int neibIdx = iNeib[i];
-//			//af::array coef = stencil.coeff1D[i];
-//			//varNp1_d(iNode) += coef * varN_d(neibIdx);
-//		}
-//
-//	}
-//
-//
-//}
+
+void DonerCellUpWind::applyBCpar()
+{
+	varNp1_d = af::moddims(varNp1_d, field.get_nNode());
+
+
+	af::array iBoundNode(field.nBoundNode, field.iBoundNode);
+
+	//An array to store the index of neighborin node based on the used stencil
+	int* iNeib = new int[stencil.nNeib];
+
+	////Traversing all the nodes in the discrete domain
+	//for (int i = 0; i < field.nBoundNode; i++) {
+	gfor(af::seq i, 0, field.nBoundNode - 1) {
+
+		//Just boundary nodes participate to create rifht hand side 
+		//af::array iNode = iBoundNode(i);
+		int iNode = iBoundNode(i).scalar<int>();
+		//int iNode = field.iBoundNode[i];
+
+		//Find the index of all the neighboring nodes
+		stencil.get_iNeib(iNode, iNeib);
+
+		varNp1_d(iNode) = 0.0;
+		for (int j = 0; j < stencil.nNeib; j++) {
+			int neibIdx = iNeib[j];
+			af::array coef = stencil.coeff1D[j];
+			varNp1_d(iNode) += coef * varN_d(neibIdx);
+		}
+
+	}
+
+
+	//std::cout << field.nBoundNode << std::endl;
+
+	//gfor(af::seq i, 0, field.nBoundNode-1) {
+
+	//	varNp1_d(i) = 0.0;
+
+	//}
+
+
+	varNp1_d = af::moddims(varNp1_d, field.get_nx(), field.get_ny());
+}
